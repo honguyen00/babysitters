@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "seed": "node seeds/seed.js"
   },
   "keywords": [],
@@ -20,6 +20,7 @@
     "sequelize": "^5.21.5"
   },
   "devDependencies": {
-    "eslint": "^7.13.0"
+    "eslint": "^7.13.0",
+    "nodemon": "^3.0.1"
   }
 }
