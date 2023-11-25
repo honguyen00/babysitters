@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 //get a user by id, include all group for that user 
 router.get('/:id', async (req, res) => {
     try {
-        const userData = await User.findByPk(req.params.id, {include: [{model: Group, through: GroupUser}]});
+        const userData = await User.findByPk(req.params.id, {include: [{model: Group, through: GroupUser}], attributes: {exclude: ['password']}});
         if(!userData) {
             res.status(400).json({message: 'Cannot find group in the database'});
             return;
