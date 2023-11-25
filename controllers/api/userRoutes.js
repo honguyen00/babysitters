@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-//get a group by id, include all users in that group 
+//get a user by id, include all group for that user 
 router.get('/:id', async (req, res) => {
     try {
         const userData = await User.findByPk(req.params.id, {include: [{model: Group, through: GroupUser}]});
