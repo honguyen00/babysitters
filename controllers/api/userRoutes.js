@@ -1,6 +1,38 @@
 const router = require('express').Router();
+const { Group, GroupUser } = require('../../models');
 const User  = require('../../models/User');
 const withAuth = require('../../utils/auth');
+
+//get all uses
+router.get('/', async (req, res) => {
+    try {
+        const userData = await User.findAll();
+        // req.session.save(() => {
+        //     req.session.user_id = userData.id;
+        //     req.session.logged_in = true;
+
+        //     res.status(200).json({user: userData, message: 'Create new user successfully'});
+        // });
+        res.status(200).json(userData);
+    } catch (error) {
+        res.status(400).json(error)
+    }
+});
+
+//get a group by id, include all users in that group 
+router.get('/:id', async (req, res) => {
+    try {
+        const userData = await User.findByPk(req.params.id, {include: [{model: Group, through: GroupUser}]});
+        if(!userData) {
+            res.status(400).json({message: 'Cannot find group in the database'});
+            return;
+        }
+        res.status(200).json(userData);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
 
 //create a new user
 router.post('/', async (req, res) => {
@@ -81,3 +113,5 @@ router.post('/logout', (req, res) => {
         res.status(404).end();
     }
 })
+
+module.exports = router;

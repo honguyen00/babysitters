@@ -60,5 +60,4 @@ Event.init(
   }
 );
 
-Router.post('/event')
 module.exports = Event;

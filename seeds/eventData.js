@@ -3,7 +3,7 @@ const {Event} = require('../models');
 const eventData = [
     {
         title: 'test event 1',
-        date: '23/11/2023',
+        date: '2023-11-23',
         start_time: '6:00',
         finish_time: '8:00',
         description: 'test event 1 description',
@@ -12,7 +12,7 @@ const eventData = [
     }, 
     {
         title: 'test event 2',
-        date: '20/11/2023',
+        date: '2023-11-30',
         start_time: '15:00',
         finish_time: '18:00',
         description: 'test event 2 description',
@@ -22,7 +22,7 @@ const eventData = [
     }, 
     {
         title: 'test event 3',
-        date: '30/11/2023',
+        date: '2023-11-29',
         start_time: '19:00',
         finish_time: '21:00',
         description: 'test event 3 description',
@@ -32,7 +32,7 @@ const eventData = [
     }, 
     {
         title: 'test event 4',
-        date: '30/11/2023',
+        date: '2023-11-23',
         start_time: '6:00',
         finish_time: '8:00',
         description: 'test event 4 description',

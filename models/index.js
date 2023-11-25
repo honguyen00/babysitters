@@ -10,7 +10,14 @@ User.belongsToMany(Group, {
     onDelete: 'CASCADE'
 });
 
-Group.belongsTo(User, {
+Group.belongsToMany(User, {
+    through: {
+        model: GroupUser, unique: false,
+    },
+    onDelete: 'CASCADE'
+});
+
+Group.hasOne(User, {
     foreignKey: 'creator_id'
 });
 

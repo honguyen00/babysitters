@@ -2,6 +2,22 @@ const router = require('express').Router();
 const { GroupUser, Group, User } = require('../../models');
 const withAuth = require('../../utils/auth');
 
+//get all groups
+router.get('/', async (req, res) => {
+    try {
+        const groupData = await Group.findAll();
+        // req.session.save(() => {
+        //     req.session.user_id = userData.id;
+        //     req.session.logged_in = true;
+
+        //     res.status(200).json({user: userData, message: 'Create new user successfully'});
+        // });
+        res.status(200).json(groupData);
+    } catch (error) {
+        res.status(400).json(error)
+    }
+});
+
 // create a new group
 router.post('/', async (req, res) => {
     try {
@@ -42,4 +58,6 @@ router.put('/:id', async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
-})
+});
+
+module.exports = router;
