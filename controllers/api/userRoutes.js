@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User  = require('../../models/User');
+const withAuth = require('../../utils/auth');
 
 //create a new user
 router.post('/', async (req, res) => {
@@ -21,7 +22,7 @@ router.put('/:id', async (req, res) => {
     try {
         const userData = await User.update(req.body,{
             where: {
-                id: req.params.id
+                id: req.params.id || req.session.user_id
             }
         });
         res.status(200).json({user: userData, message: 'Update user info successfully'});
@@ -34,7 +35,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const userData = await User.destroy({where: {
-            id: req.params.id
+            id: req.params.id || req.session.user_id
         }});
         res.status(200).json({user: userData, message: 'Delete user successfully'})
     } catch (error) {
