@@ -1,6 +1,6 @@
-const User = require('./Users');
-const Group = require('./Groups');
-const GroupUser = require('./GroupUsers');
+const User = require('./User');
+const Group = require('./Group');
+const GroupUser = require('./GroupUser');
 const Event = require('./Event');
 
 User.belongsToMany(Group, {
@@ -10,7 +10,14 @@ User.belongsToMany(Group, {
     onDelete: 'CASCADE'
 });
 
-Group.belongsTo(User, {
+Group.belongsToMany(User, {
+    through: {
+        model: GroupUser, unique: false,
+    },
+    onDelete: 'CASCADE'
+});
+
+Group.hasOne(User, {
     foreignKey: 'creator_id'
 });
 
@@ -22,3 +29,4 @@ Event.belongsTo(User, {
     foreignKey: 'accepted_by'
 });
 
+module.exports = { User, Group, GroupUser, Event }
