@@ -1,0 +1,45 @@
+<div class="d-flex flex-row justify-content-center mx-5 my-2">
+    <form class="w-100 pr-5" id="form-login">
+        <h2>Login</h2>
+        <div class="form-group">
+            <label for="loginEmail">Email address:</label>
+            <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email" required="true">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password:</label>
+            <input type="password" class="form-control" id="loginPassword" placeholder="Password" required="true">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+    <form class="w-100" id="form-register">
+        <h2>Sign up</h2>
+        <div class="form-row">
+            <div class="form-group col">
+            <label for="registerFirstName">First name:</label>
+            <input type="text" class="form-control" id="registerFirstName" aria-describedby="firstName" placeholder="First Name">
+            </div>
+            <div class="form-group col">
+                <label for="registerLastName">Last name:</label>
+                <input type="text" class="form-control" id="registerLastName" aria-describedby="lastName" placeholder="Last Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="registerAddress">Address:</label>
+            <input type="text" class="form-control" id="address" placeholder="1234 Main St">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-10">
+                <label for="registerCity">City/State:</label>
+                <input type="text" class="form-control" id="registerCity">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="registerPostcode">Postcode</label>
+                <input type="text" class="form-control" id="registerPostcode">
+            </div>
+        </div>
+        <button class="btn btn-primary" id="next">Next</button>
+    </form>
+</div>
+
+<script src="./js/login.js"></script>
