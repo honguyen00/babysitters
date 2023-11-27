@@ -1,6 +1,5 @@
 const router = require('express').Router();
-const { Group, GroupUser } = require('../../models');
-const User  = require('../../models/User');
+const { Group, GroupUser, User } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 //get all uses
@@ -79,16 +78,15 @@ router.delete('/:id', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const userData = await User.findOne({where: {email: req.body.email}});
-
+        console.log('try to find email')
         if(!userData) {
-            res.status(400).json({message: 'Incorrect email or password, please try again!'});
+            res.status(400).json(console.log({message: 'Incorrect email or password, please try again!'}));
             return;
         }
-
-        const validPassword = await User.checkPassword(req.body.password);
-        
+        console.log('check password')
+        const validPassword = await userData.checkPassword(req.body.password);
         if(!validPassword) {
-            res.status(400).json({message: "Incorrect email or password, please try again!"});
+            res.status(400).json(console.log({message: 'Incorrect email or password, please try again!'}));
             return;
         }
 
@@ -99,13 +97,13 @@ router.post('/login', async (req, res) => {
             res.json({user: userData, message: 'Logged in successfully!'})
         });
     } catch (error) {
-        res.status(400).json(error);
+        res.status(500).json(error);
     }
 });
 
 // user tries logout
 router.post('/logout', (req, res) => {
-    if (req.session.logged_id) {
+    if (req.session.logged_in) {
         req.session.destroy(() => {
             res.status(204).end();
         });

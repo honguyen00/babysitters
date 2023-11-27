@@ -8,33 +8,37 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownEvents" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="" id="navbarDropdownEvents" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Events
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownEvents">
-                    <a class="dropdown-item" href="#">Create Event</a>
-                    <a class="dropdown-item" href="#">My Events</a>
+                    <a class="dropdown-item" href="">Create Event</a>
+                    <a class="dropdown-item" href="">My Events</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownGroups" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="" id="navbarDropdownGroups" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Groups
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownGroups">
-                    <a class="dropdown-item" href="#">Create a Group</a>
-                    <a class="dropdown-item" href="#">Join a Group</a>
+                    <a class="dropdown-item" href="">Create a Group</a>
+                    <a class="dropdown-item" href="">Join a Group</a>
                 </div>
             </li>
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="/profile">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Logout</a>
+                {{#if logged_in}}
+                <a class="nav-link" id="logout">Logout</a>
+                {{else}}
+                <a class="nav-link" href="/login">Login/Signup</a>
+                {{/if}}
             </li>
         </ul>
     </div>
