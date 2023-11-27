@@ -23,6 +23,7 @@ router.get('/profile', withAuth, async (req,res) => {
         res.render('profile', {
             ...user,
             logged_in: true, title: 'Profile'
+            user_id: req.session.user_id
         });
     } catch (error) {
         res.status(500).json(error);
