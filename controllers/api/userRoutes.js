@@ -6,12 +6,6 @@ const withAuth = require('../../utils/auth');
 router.get('/', async (req, res) => {
     try {
         const userData = await User.findAll();
-        // req.session.save(() => {
-        //     req.session.user_id = userData.id;
-        //     req.session.logged_in = true;
-
-        //     res.status(200).json({user: userData, message: 'Create new user successfully'});
-        // });
         res.status(200).json(userData);
     } catch (error) {
         res.status(400).json(error)
@@ -19,7 +13,7 @@ router.get('/', async (req, res) => {
 });
 
 //get a user by id, include all group for that user 
-router.get('/:id', async (req, res) => {
+router.get('/:id', withAuth, async (req, res) => {
     try {
         const userData = await User.findByPk(req.params.id, {include: [{model: Group, through: GroupUser}], attributes: {exclude: ['password']}});
         if(!userData) {
@@ -36,6 +30,7 @@ router.get('/:id', async (req, res) => {
 //create a new user
 router.post('/', async (req, res) => {
     try {
+        console.log(req.body);
         const userData = await User.create(req.body);
         req.session.save(() => {
             req.session.user_id = userData.id;
@@ -78,15 +73,13 @@ router.delete('/:id', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const userData = await User.findOne({where: {email: req.body.email}});
-        console.log('try to find email')
         if(!userData) {
-            res.status(400).json(console.log({message: 'Incorrect email or password, please try again!'}));
+            res.status(400).json({message: 'Incorrect email or password, please try again!'});
             return;
         }
-        console.log('check password')
         const validPassword = await userData.checkPassword(req.body.password);
         if(!validPassword) {
-            res.status(400).json(console.log({message: 'Incorrect email or password, please try again!'}));
+            res.status(400).json({message: 'Incorrect email or password, please try again!'});
             return;
         }
 

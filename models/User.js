@@ -24,10 +24,6 @@ User.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -38,14 +34,6 @@ User.init(
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                isValidPassword() {
-                    var regex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-                    if (!regex.test(this.password)) {
-                        throw new Error('Not a valid password')
-                    };
-                }
-            }
         },
         address_line: {
             type: DataTypes.STRING,
