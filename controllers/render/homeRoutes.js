@@ -70,13 +70,37 @@ router.get('/create-event', withAuth, async (req,res) => {
     }
 });
 
-// get user profile, together with their belonged groups and events
-router.get('/events-feed', withAuth, async (req,res) => {
+// get all events in the join group
+router.get('/events-feed', async (req,res) => {
     try {
-        res.render('createEvent', {
-            logged_in: true, title: 'Create an event',
-            user_id: req.session.user_id
-        });
+        const groups = await GroupUser.findAll({where: {
+            user_id: 3
+        }})
+        const groups_id = groups.map((item) => item.group_id);
+        // res.status(200).json(groups_id);
+
+        const membersData = await GroupUser.findAll({where: {group_id: groups_id}})
+        const members = membersData.filter((item) => {
+            if(item.user_id !== 3) {
+                return item.user_id
+            }
+        }).map((item) => item.user_id)
+        
+        const Members = members.filter((item, pos) => {
+            return members.indexOf(item) == pos;
+        })
+
+        const allEvents = await Event.findAll({
+            where: {created_by: Members}
+        })
+        res.status(200).json(allEvents);
+
+        // res.render('eventFeed', {
+        //     userdetails: userdata,
+        //     logged_in: true, title: 'Create an event',
+        //     user_id: req.session.user_id
+        // });
+
     } catch (error) {
         res.status(500).json(error);
     }
