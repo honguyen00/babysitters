@@ -1,29 +1,25 @@
 const router = require('express').Router();
-const { Group, GroupUser, User } = require('../../models');
+const { Group, GroupUser, User, Event } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 //get all uses
 router.get('/', async (req, res) => {
     try {
         const userData = await User.findAll();
-        // req.session.save(() => {
-        //     req.session.user_id = userData.id;
-        //     req.session.logged_in = true;
-
-        //     res.status(200).json({user: userData, message: 'Create new user successfully'});
-        // });
         res.status(200).json(userData);
     } catch (error) {
         res.status(400).json(error)
     }
 });
 
-//get a user by id, include all group for that user 
+//get a user by id, include all groups and events for that user 
 router.get('/:id', async (req, res) => {
     try {
-        const userData = await User.findByPk(req.params.id, {include: [{model: Group, through: GroupUser}], attributes: {exclude: ['password']}});
+        const userData = await User.findByPk(req.params.id, {include: 
+            [{model: Group, through: {attributes: []}}, {model: Event, as: 'created_events'}],
+            attributes: {exclude: ['password']}});
         if(!userData) {
-            res.status(400).json({message: 'Cannot find group in the database'});
+            res.status(400).json({message: 'Cannot find user in the database'});
             return;
         }
         res.status(200).json(userData);
@@ -36,13 +32,19 @@ router.get('/:id', async (req, res) => {
 //create a new user
 router.post('/', async (req, res) => {
     try {
-        const userData = await User.create(req.body);
-        req.session.save(() => {
-            req.session.user_id = userData.id;
-            req.session.logged_in = true;
-
-            res.status(200).json({user: userData, message: 'Create new user successfully'});
-        });
+        const [userData, created] = await User.findOrCreate({where: {email: req.body.email}, defaults: {
+            ...req.body
+        }});
+        if(created) {
+            req.session.save(() => {
+                req.session.user_id = userData.id;
+                req.session.logged_in = true;
+    
+                res.status(200).json({user: userData, message: 'Create new user successfully'});
+            });
+        } else {
+            res.status(403).json({message: 'Email has already been registered as an user!'})
+        }
     } catch (error) {
         res.status(400).json(error)
     }
@@ -53,7 +55,7 @@ router.put('/:id', async (req, res) => {
     try {
         const userData = await User.update(req.body,{
             where: {
-                id: req.params.id || req.session.user_id
+                id: req.params.id
             }
         });
         res.status(200).json({user: userData, message: 'Update user info successfully'});
@@ -66,7 +68,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const userData = await User.destroy({where: {
-            id: req.params.id || req.session.user_id
+            id: req.params.id 
         }});
         res.status(200).json({user: userData, message: 'Delete user successfully'})
     } catch (error) {
@@ -78,15 +80,13 @@ router.delete('/:id', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const userData = await User.findOne({where: {email: req.body.email}});
-        console.log('try to find email')
         if(!userData) {
-            res.status(400).json(console.log({message: 'Incorrect email or password, please try again!'}));
+            res.status(400).json({message: 'Incorrect email or password, please try again!'});
             return;
         }
-        console.log('check password')
         const validPassword = await userData.checkPassword(req.body.password);
         if(!validPassword) {
-            res.status(400).json(console.log({message: 'Incorrect email or password, please try again!'}));
+            res.status(400).json({message: 'Incorrect email or password, please try again!'});
             return;
         }
 

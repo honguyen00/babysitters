@@ -1,0 +1,18 @@
+<h2>My created events</h2>
+
+{{#each created_events as |event|}}
+<p>{{event.title}}</p>
+<p>{{event.start_time}}</p>
+<p>{{event.finish_time}}</p>
+<p>{{event.date}}</p>
+{{/each}}
+
+
+<h2>My accepted events</h2>
+
+{{#each accepted_events as |event|}}
+<p>{{event.title}}</p>
+<p>{{event.start_time}}</p>
+<p>{{event.finish_time}}</p>
+<p>{{event.date}}</p>
+{{/each}}

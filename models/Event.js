@@ -45,11 +45,12 @@ Event.init(
     },
     accepted_by: {
       type: DataTypes.INTEGER,
+      allowNull: true,
       references: {
         model: 'user',
         key: 'id',
       },
-    },
+    }
   },
   {
     sequelize,

@@ -1,44 +1,85 @@
-<div class="d-flex flex-row justify-content-center mx-5 my-2">
-    <form class="w-100 pr-5" id="form-login">
+<div class="d-flex flex-column justify-content-center mx-5 my-2">
+    <form class="w-100" id="form-login">
         <h2>Login</h2>
         <div class="form-group">
             <label for="loginEmail">Email address:</label>
-            <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email" required="true">
+            <input type="email" class="form-control form-input" id="loginEmail" aria-describedby="emailHelp">
         </div>
         <div class="form-group">
-            <label for="exampleInputPassword1">Password:</label>
-            <input type="password" class="form-control" id="loginPassword" placeholder="Password" required="true">
+            <label for="loginPassword">Password:</label>
+            <input type="password" class="form-control" id="loginPassword">
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <div class="d-flex align-items-center w-100">
+            <button type="submit" class="btn btn-primary d-inline-block">Login</button>
+            <small class="ml-2 my-0 text-danger" id="errorMessage1"></small>
+        </div>
     </form>
-
+    <br/>
+    <h2 class="line-break"><span>or</span></h2>
+    <br/>
     <form class="w-100" id="form-register">
         <h2>Sign up</h2>
-        <div class="form-row">
-            <div class="form-group col">
-            <label for="registerFirstName">First name:</label>
-            <input type="text" class="form-control" id="registerFirstName" aria-describedby="firstName" placeholder="First Name">
+        <ul id="progressBar">
+            <li class="active">Personal Details</li>
+            <li>Account Details</li>
+        </ul>
+        <div class="form-step">
+            <div class="d-none" id="form-1">
+                <div class="form-row">
+                    <div class="form-group col">
+                    <label for="registerFirstName">First name:</label>
+                    <input type="text" class="form-control" id="registerFirstName" aria-describedby="firstName" placeholder="First Name">
+                    </div>
+                    <div class="form-group col">
+                        <label for="registerLastName">Last name:</label>
+                        <input type="text" class="form-control" id="registerLastName" aria-describedby="lastName" placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="registerAddress">Address:</label>
+                    <input type="text" class="form-control" id="registerAddress" placeholder="1234 Main St">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-10">
+                        <label for="registerCity">City/State:</label>
+                        <input type="text" class="form-control" id="registerCity">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="registerPostcode">Postcode</label>
+                        <input type="text" class="form-control" id="registerPostcode" required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                        <label for="registerPhone">Phone number:</label>
+                        <input type="text" class="form-control" id="registerPhone" placeholder="Phone number">
+                </div>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-primary progress-control">Next</button>
+                    <small class="ml-2 my-0 text-danger" id="errorMessage2"></small>
+                </div>      
             </div>
-            <div class="form-group col">
-                <label for="registerLastName">Last name:</label>
-                <input type="text" class="form-control" id="registerLastName" aria-describedby="lastName" placeholder="Last Name">
+            <div class="d-none" id="form-2">
+                <div class="form-group">
+                    <label for="registerEmail">Email:</label>
+                    <input type="email" class="form-control" id="registerEmail" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password:</label>
+                    <input type="password" class="form-control" id="registerPassword" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="confirmedPassword">Confirm your password:</label>
+                    <input type="password" class="form-control" id="confirmedPassword" placeholder="Password">
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-dark progress-control">Previous</button>
+                        <small class="ml-2 my-0 text-danger" id="errorMessage3"></small>
+                    </div>
+                    <button class="btn btn-primary submit" type='submit'>Submit</button>
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="registerAddress">Address:</label>
-            <input type="text" class="form-control" id="address" placeholder="1234 Main St">
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-10">
-                <label for="registerCity">City/State:</label>
-                <input type="text" class="form-control" id="registerCity">
-            </div>
-            <div class="form-group col-md-2">
-                <label for="registerPostcode">Postcode</label>
-                <input type="text" class="form-control" id="registerPostcode">
-            </div>
-        </div>
-        <button class="btn btn-primary" id="next">Next</button>
     </form>
 </div>
 

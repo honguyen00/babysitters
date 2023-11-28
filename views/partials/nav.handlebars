@@ -12,8 +12,8 @@
                     Events
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownEvents">
-                    <a class="dropdown-item" href="/create-event">Create Event</a>
-                    <a class="dropdown-item" href="my-event">My Events</a>
+                    <a class="dropdown-item" href="create-event">Create Event</a>
+                    <a class="dropdown-item" href="events">My Events</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -35,7 +35,7 @@
             </li>
             <li class="nav-item">
                 {{#if logged_in}}
-                <a class="nav-link" id="logout">Logout</a>
+                <a class="nav-link" href="" id="logout">Logout</a>
                 {{else}}
                 <a class="nav-link" href="/login">Login/Signup</a>
                 {{/if}}
