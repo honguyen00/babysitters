@@ -13,11 +13,11 @@ router.get('/', async (req, res) => {
 });
 
 //get a user by id, include all group for that user 
-router.get('/:id', withAuth, async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
-        const userData = await User.findByPk(req.params.id, {include: [{model: Group, through: GroupUser}], attributes: {exclude: ['password']}});
+        const userData = await User.findByPk(req.params.id, {include: [{model: Group, through: {attributes: []}}], attributes: {exclude: ['password']}});
         if(!userData) {
-            res.status(400).json({message: 'Cannot find group in the database'});
+            res.status(400).json({message: 'Cannot find user in the database'});
             return;
         }
         res.status(200).json(userData);
@@ -30,14 +30,19 @@ router.get('/:id', withAuth, async (req, res) => {
 //create a new user
 router.post('/', async (req, res) => {
     try {
-        console.log(req.body);
-        const userData = await User.create(req.body);
-        req.session.save(() => {
-            req.session.user_id = userData.id;
-            req.session.logged_in = true;
-
-            res.status(200).json({user: userData, message: 'Create new user successfully'});
-        });
+        const [userData, created] = await User.findOrCreate({where: {email: req.body.email}, defaults: {
+            ...req.body
+        }});
+        if(created) {
+            req.session.save(() => {
+                req.session.user_id = userData.id;
+                req.session.logged_in = true;
+    
+                res.status(200).json({user: userData, message: 'Create new user successfully'});
+            });
+        } else {
+            res.status(403).json({message: 'Email has already been registered as an user!'})
+        }
     } catch (error) {
         res.status(400).json(error)
     }

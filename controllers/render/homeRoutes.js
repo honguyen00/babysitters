@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const { User, Group, GroupUser, Event } = require('../models');
-const withAuth = require('../utils/auth');
+const { User, Group, GroupUser, Event } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 //getting homepage (need more coding in handlebars for homepage when not logged in and when logged in)
 router.get('/', async (req, res) => {
@@ -22,7 +22,7 @@ router.get('/profile', withAuth, async (req,res) => {
 
         res.render('profile', {
             ...user,
-            logged_in: true, title: 'Profile'
+            logged_in: true, title: 'Profile',
             user_id: req.session.user_id
         });
     } catch (error) {

@@ -1,7 +1,11 @@
-const inputValidate = (form, message) => {
-        form.append(`<p class='my-1 text-danger'>${message}</p>`)
+const errorMessage = (form, errorP, message) => {
+        // form.children().find('.errorMessage').value = message;
+        // setTimeout(() => {
+        //     form.find('.errorMessage').value = "";
+        // }, 1500);
+        form.find(`${errorP}`)[0].innerText = message;
         setTimeout(() => {
-            form.children().last().remove();
+            form.find(`${errorP}`)[0].innerText = "";
         }, 1500);
 }
     
@@ -24,10 +28,12 @@ const loginFormHandler = async (event) => {
             document.location.replace('/profile');
         }
         else {
-            inputValidate(loginForm, 'Incorrect email or password!')
+            errorMessage(loginForm, '#errorMessage1', 'Incorrect email or password!')
             document.querySelector('#loginEmail').value = "";
             document.querySelector('#loginPassword').value = "";
         }
+    } else {
+        errorMessage(loginForm, '#errorMessage1', 'Missing input! Please fill out all fields')
     }
 }
 
@@ -44,8 +50,18 @@ const registerForm = $('#form-register');
 
 registerForm.on('click', '.progress-control', (event) => {
     event.preventDefault();
+    var first_name = $('#registerFirstName')[0].value.trim();
+    var last_name = $('#registerLastName')[0].value.trim();
+    var address_line = $('#registerAddress')[0].value.trim();
+    var suburb = $('#registerCity')[0].value.trim() + ", " + $('#registerPostcode')[0].value.trim();
+    var phone_number = $('#registerPhone')[0].value.trim();
     if(event.target.innerText == 'Next') {
-        renderForm(++stepNumber, stepNumber-1)
+        if(!first_name || !last_name || !address_line || !suburb || !phone_number) {
+            errorMessage(registerForm, '#errorMessage2', 'Missing input! Please fill out all fields.');
+            return
+        } else {
+            renderForm(++stepNumber, stepNumber-1)
+        }
     } else {
         renderForm(--stepNumber, stepNumber+1)
     }
@@ -61,17 +77,18 @@ const renderForm = (step, previousStep) => {
 
 registerForm.on('submit', async (event) => {
     event.preventDefault();
-    var first_name = $('#registerFirstName')[0].value.trim();
-    var last_name = $('#registerLastName')[0].value.trim();
-    var address_line = $('#registerAddress')[0].value.trim();
-    var suburb = $('#registerCity')[0].value.trim() + ", " + $('#registerPostcode')[0].value.trim();
-    var phone_number = $('#registerPhone')[0].value.trim();
     var email = $('#registerEmail')[0].value.trim();
     var password = $('#registerPassword')[0].value.trim();
     var confirmed = $('#confirmedPassword')[0].value.trim();
+    if(!email || !password || !confirmed ) {
+        errorMessage(registerForm, '#errorMessage3', 'Missing input! Please fill out all fields');
+        return;
+    }
     if((password !== confirmed)) {
-        inputValidate(registerForm, 'Password does not match!');
-    } else {
+        errorMessage(registerForm, '#errorMessage3', 'Password does not match!');
+        return;
+    } 
+    else {
         const response = await fetch('/api/users', {
             method: 'POST',
             body: JSON.stringify({ first_name, last_name, email, password, address_line, suburb, phone_number }),
@@ -80,8 +97,12 @@ registerForm.on('submit', async (event) => {
 
         if(response.ok) {
             document.location.replace('/');
+        } else if (response.status === 403) {
+            errorMessage(registerForm, 'Email has already existed!');
+            return;
         } else {
-            alert(response.statusText);
+            errorMessage(registerForm, 'Could not create a new account! Please try again.')
+            return;
         }
     }
 });

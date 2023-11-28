@@ -1,9 +1,15 @@
-
+h2 {
+    margin-bottom: 1rem;
+}
 /* ===================================== */
 /* Progress bar for signup form */
 #progressBar {
     overflow: hidden;
     counter-reset: step;
+}
+
+ul {
+    padding-inline-start: 0 !important;
 }
 
 #progressBar li {
