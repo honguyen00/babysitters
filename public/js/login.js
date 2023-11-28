@@ -1,15 +1,10 @@
 const errorMessage = (form, errorP, message) => {
-        // form.children().find('.errorMessage').value = message;
-        // setTimeout(() => {
-        //     form.find('.errorMessage').value = "";
-        // }, 1500);
         form.find(`${errorP}`)[0].innerText = message;
         setTimeout(() => {
             form.find(`${errorP}`)[0].innerText = "";
         }, 1500);
 }
     
-
 // ===================================
 // Login form
 const loginForm = $('#form-login');
@@ -25,12 +20,10 @@ const loginFormHandler = async (event) => {
         });
 
         if(response.ok) {
-            document.location.replace('/profile');
+            document.location.replace('/');
         }
         else {
             errorMessage(loginForm, '#errorMessage1', 'Incorrect email or password!')
-            document.querySelector('#loginEmail').value = "";
-            document.querySelector('#loginPassword').value = "";
         }
     } else {
         errorMessage(loginForm, '#errorMessage1', 'Missing input! Please fill out all fields')

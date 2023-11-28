@@ -1,3 +1,4 @@
+//When user click on logout
 const logoutBtn = $('#logout');
 
 const handleLogout = async () => {
