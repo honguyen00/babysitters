@@ -1,0 +1,15 @@
+<div class="container mt-4">
+    <h1>Events Feed</h1>
+    <div class="d-flex flex-wrap">
+        {{#each events}}
+<div class="card" style="width: 30%; margin: 1%;">
+    <div class="card-body">
+        <h5 class="card-title">Host: {{this.Host.first_name}} {{this.Host.last_name}}</h5>
+        <p class="card-text">Description: {{this.description}}</p>
+        <p class="card-text">Date: {{this.date}}</p>
+        <p class="card-text">Time: {{this.start_time}} - {{this.end_time}}</p>
+        <p class="card-text">Location: {{this.Host.suburb}}</p>
+        <p class="card-text">Contact: {{this.Host.phone_number}}</p>
+    </div>
+</div>
+{{/each}}
