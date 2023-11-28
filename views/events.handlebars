@@ -1,18 +1,14 @@
-<h2>My created events</h2>
-
-{{#each created_events as |event|}}
-<p>{{event.title}}</p>
-<p>{{event.start_time}}</p>
-<p>{{event.finish_time}}</p>
-<p>{{event.date}}</p>
-{{/each}}
-
-
-<h2>My accepted events</h2>
-
-{{#each accepted_events as |event|}}
-<p>{{event.title}}</p>
-<p>{{event.start_time}}</p>
-<p>{{event.finish_time}}</p>
-<p>{{event.date}}</p>
+<div class="container mt-4">
+    <h1>My Events</h1>
+    <h5>{{userdetails.first}} {{userdetails.last_name}} Events</h5>
+    <div class="d-flex flex-wrap">
+        {{#each events}}
+<div class="card" style="width: 30%; margin: 1%;">
+    <div class="card-body">
+        <h5 class="card-title">Host: {{userdetails.first_name}} {{userdetails.last_name}}</h5>
+        <p class="card-text">Description: {{description}}</p>
+        <p class="card-text">Date: {{date}}</p>
+        <p class="card-text">Time: {{start_time}} - {{end_time}}</p>
+    </div>
+</div>
 {{/each}}
