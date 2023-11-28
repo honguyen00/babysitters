@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Group, GroupUser, User } = require('../../models');
+const { Group, GroupUser, User, Event } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 //get all uses
@@ -12,10 +12,12 @@ router.get('/', async (req, res) => {
     }
 });
 
-//get a user by id, include all group for that user 
+//get a user by id, include all groups and events for that user 
 router.get('/:id', async (req, res) => {
     try {
-        const userData = await User.findByPk(req.params.id, {include: [{model: Group, through: {attributes: []}}], attributes: {exclude: ['password']}});
+        const userData = await User.findByPk(req.params.id, {include: 
+            [{model: Group, through: {attributes: []}}, {model: Event, as: 'created_events'}],
+            attributes: {exclude: ['password']}});
         if(!userData) {
             res.status(400).json({message: 'Cannot find user in the database'});
             return;
@@ -53,7 +55,7 @@ router.put('/:id', async (req, res) => {
     try {
         const userData = await User.update(req.body,{
             where: {
-                id: req.params.id || req.session.user_id
+                id: req.params.id
             }
         });
         res.status(200).json({user: userData, message: 'Update user info successfully'});
@@ -66,7 +68,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const userData = await User.destroy({where: {
-            id: req.params.id || req.session.user_id
+            id: req.params.id 
         }});
         res.status(200).json({user: userData, message: 'Delete user successfully'})
     } catch (error) {
