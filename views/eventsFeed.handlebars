@@ -1,6 +1,5 @@
 <div class="container mt-4">
-    <h1>My Events</h1>
-    <h5>{{userdetails.first}} {{userdetails.last_name}} Events</h5>
+    <h1>Events Feed</h1>
     <div class="d-flex flex-wrap">
         {{#each events}}
 <div class="card" style="width: 30%; margin: 1%;">
@@ -9,6 +8,8 @@
         <p class="card-text">Description: {{description}}</p>
         <p class="card-text">Date: {{date}}</p>
         <p class="card-text">Time: {{start_time}} - {{end_time}}</p>
+        <p class="card-text">Location: {{userdetails.suburb}}</p>
+        <p class="card-text">Contact: {{userdetails.phone_number}}</p>
     </div>
 </div>
 {{/each}}
