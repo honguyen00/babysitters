@@ -29,7 +29,7 @@ router.get('/:id', async (req, res) => {
 // POST a new event
 router.post('/', async (req, res) => {
   try {
-    const newEvent = await Event.create(req.body);
+    const newEvent = await Event.create({...req.body, created_by: req.session.user_id});
     res.status(201).json(newEvent);
   } catch (error) {
     res.status(400).json(error);

@@ -70,6 +70,17 @@ router.get('/create-event', withAuth, async (req,res) => {
     }
 });
 
+// get user profile, together with their belonged groups and events
+router.get('/events-feed', withAuth, async (req,res) => {
+    try {
+        res.render('createEvent', {
+            logged_in: true, title: 'Create an event',
+            user_id: req.session.user_id
+        });
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
 
 // getting login page
 router.get('/login', (req, res) => {
