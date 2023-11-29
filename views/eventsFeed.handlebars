@@ -1,20 +1,15 @@
+{{> navbar}}
 <div class="container mt-4">
     <h1>Events Feed</h1>
     <div class="d-flex flex-wrap">
-   
-    {{#each events}}
-    <div data-id={{this.id}}></div>
-    <div class="card" style="width: 30%; margin: 1%;">
-        <div class="card-body">
-            
-            <h5 class="card-title">Host: {{userdetails.first_name}} {{userdetails.last_name}}</h5>
-            <p class="card-text">Description: {{description}}</p>
-            <p class="card-text">Date: {{date}}</p>
-            <p class="card-text">Time: {{start_time}} - {{end_time}}</p>
-            <p class="card-text">Location: {{userdetails.suburb}}</p>
-            <p class="card-text">Contact: {{userdetails.phone_number}}</p>
-        </div>
-    </div>
-    {{/each}}
+<!-- In views/eventFeed.handlebars -->
+{{#each events}}
+    {{> eventCard this}}
+{{else}}
+    <p>No events to show.</p>
+{{/each}}
+
     </div>
 </div>
+
+<script src="/js/eventFeed.js"></script>
