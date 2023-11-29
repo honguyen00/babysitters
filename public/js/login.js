@@ -38,16 +38,21 @@ var currentForm, previousForm;
 var stepNumber = 1;
 var currentForm = $('#form-'+stepNumber);
 currentForm.removeClass('d-none')
+var first_name;
+var last_name;
+var address_line;
+var suburb;
+var phone_number;
 
 const registerForm = $('#form-register');
 
 registerForm.on('click', '.progress-control', (event) => {
     event.preventDefault();
-    var first_name = $('#registerFirstName')[0].value.trim();
-    var last_name = $('#registerLastName')[0].value.trim();
-    var address_line = $('#registerAddress')[0].value.trim();
-    var suburb = $('#registerCity')[0].value.trim() + ", " + $('#registerPostcode')[0].value.trim();
-    var phone_number = $('#registerPhone')[0].value.trim();
+    first_name = $('#registerFirstName')[0].value.trim();
+    last_name = $('#registerLastName')[0].value.trim();
+    address_line = $('#registerAddress')[0].value.trim();
+    suburb = $('#registerCity')[0].value.trim() + ", " + $('#registerPostcode')[0].value.trim();
+    phone_number = $('#registerPhone')[0].value.trim();
     if(event.target.innerText == 'Next') {
         if(!first_name || !last_name || !address_line || !suburb || !phone_number) {
             errorMessage(registerForm, '#errorMessage2', 'Missing input! Please fill out all fields.');
@@ -84,17 +89,17 @@ registerForm.on('submit', async (event) => {
     else {
         const response = await fetch('/api/users', {
             method: 'POST',
-            body: JSON.stringify({ first_name, last_name, email, password, address_line, suburb, phone_number }),
+            body: JSON.stringify({first_name, last_name, email, password, address_line, suburb, phone_number}),
             headers: { 'Content-Type': 'application/json' }
         });
 
         if(response.ok) {
             document.location.replace('/');
         } else if (response.status === 403) {
-            errorMessage(registerForm, 'Email has already existed!');
+            errorMessage(registerForm, '#errorMessage3', 'Email has already existed! Please sign in instead.');
             return;
         } else {
-            errorMessage(registerForm, 'Could not create a new account! Please try again.')
+            errorMessage(registerForm, '#errorMessage3', 'Could not create a new account! Please try again.')
             return;
         }
     }

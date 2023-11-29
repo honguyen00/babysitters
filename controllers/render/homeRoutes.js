@@ -1,12 +1,15 @@
 const router = require('express').Router();
-const { where } = require('sequelize');
 const { User, Group, GroupUser, Event } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 //getting homepage (need more coding in handlebars for homepage when not logged in and when logged in)
 router.get('/', async (req, res) => {
     try {
-        res.render('homepage', {logged_in: req.session.logged_in, title: 'BabySitters Club'})
+        if(!req.session.logged_in) {
+            res.render('homepage', {title: 'BabySitters Club'})
+        } else {
+            res.redirect('/home');
+        }
     } catch (error) {
         res.status(500).json(error);
     }
@@ -14,7 +17,6 @@ router.get('/', async (req, res) => {
 
 // get user profile, together with their belonged groups and events
 router.get('/profile', withAuth, async (req,res) => {
-    console.log(req.session.user_id, req.session.logged_in);
     try {
         const userData = await User.findByPk(req.session.user_id, {
             attributes: { exclude: ['password'] },
@@ -32,17 +34,18 @@ router.get('/profile', withAuth, async (req,res) => {
 });
 
 // get user events both created and accepted
-router.get('/events', withAuth, async (req,res) => {
+router.get('/events', async (req,res) => {
     try {
-        const createdeventData = await Event.findAll({where: {
+        const createdeventData = await Event.findAll({include: {model: User, as: 'created_user', attributes: {exclude: ['password']}}, where: {
             created_by: req.session.user_id
         }});
+
         const created_events = createdeventData.map((item) => {
             return item.get({plain: true})});
         
-        const acceptedeventData = await Event.findAll({
-            where: {accepted_by: req.session.user_id}
-        });
+        const acceptedeventData = await Event.findAll({include: {model: User, as: 'accepted_user', attributes: {exclude: ['password']}}, where: {
+            accepted_by: req.session.user_id
+        }});
 
         const accepted_events = acceptedeventData.map((item) => {
             return item.get({plain: true})});
@@ -71,12 +74,12 @@ router.get('/create-event', withAuth, async (req,res) => {
 });
 
 // get all events in the joined groups
-router.get('/events-feed', async (req,res) => {
+router.get('/home', withAuth, async (req,res) => {
     try {
         const groups = await GroupUser.findAll({where: {
-            user_id: 3
+            user_id: req.session.user_id
         }})
-        const groups_id = groups.map((item) => item.group_id)
+        const groups_id = groups.map((item) => item.group_id).sort();
         const groupuser = groups_id.filter((item, index) => {return groups_id.indexOf(item) == index});
         var eventsFeed = []
         groupuser.forEach(id => {
@@ -90,7 +93,6 @@ router.get('/events-feed', async (req,res) => {
         })
         var member1 = members.map((item) => item.user_id);
         var member2 = members.map((item) => {return {user: item.user_id, group: item.group_id}});
-        console.log(member2);
         const Members = member1.filter((item, pos) => {
             return member1.indexOf(item) == pos;
         })
@@ -110,10 +112,9 @@ router.get('/events-feed', async (req,res) => {
                 }
             })
         })
-        
         res.render('eventsFeed', {
             eventsFeed,
-            logged_in: true, title: 'Events Feed',
+            logged_in: true, title: 'Home Feed',
             user_id: req.session.user_id
         });
     } catch (error) {

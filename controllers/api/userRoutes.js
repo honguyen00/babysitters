@@ -32,9 +32,7 @@ router.get('/:id', async (req, res) => {
 //create a new user
 router.post('/', async (req, res) => {
     try {
-        const [userData, created] = await User.findOrCreate({where: {email: req.body.email}, defaults: {
-            ...req.body
-        }});
+        const [userData, created] = await User.findOrCreate({where: {email: req.body.email}, defaults: req.body});
         if(created) {
             req.session.save(() => {
                 req.session.user_id = userData.id;
