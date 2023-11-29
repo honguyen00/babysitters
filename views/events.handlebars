@@ -1,8 +1,16 @@
 <div class="container mt-4">
-    <h1>My Events</h1>
-    <h5>{{userdetails.first}} {{userdetails.last_name}} Events</h5>
+    <h1>{{userdetails.first_name}} {{userdetails.last_name}}'s Events</h1>
+    <h2>Created Events</h2>
     <div class="d-flex flex-wrap">
-{{#each events}}
-    {{> eventCard this}}
-{{/each}}
+        {{#each created_events}}
+            {{> eventCard this}}
+        {{/each}}
     </div>
+
+    <h2>Accepted Events</h2>
+    <div class="d-flex flex-wrap">
+        {{#each accepted_events}}
+            {{> eventCard this}}
+        {{/each}}
+    </div>
+</div>

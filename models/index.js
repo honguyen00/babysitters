@@ -17,20 +17,28 @@ Group.belongsToMany(User, {
     onDelete: 'CASCADE'
 });
 
-User.hasOne(Group, {
-    foreignKey: 'creator_id',
-    onDelete: 'CASCADE'
-});
-
-Event.hasOne(User, {
+// In your User model
+User.hasMany(Event, {
     foreignKey: 'created_by',
     as: 'created_events'
 });
 
-Event.hasOne(User, {
+User.hasMany(Event, {
     foreignKey: 'accepted_by',
     as: 'accepted_events'
-})
+});
+
+// In your Event model
+Event.belongsTo(User, {
+    foreignKey: 'created_by',
+    as: 'creator'
+});
+
+Event.belongsTo(User, {
+    foreignKey: 'accepted_by',
+    as: 'acceptor'
+});
+
 
 
 module.exports = { User, Group, GroupUser, Event }

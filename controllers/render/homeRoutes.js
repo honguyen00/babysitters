@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
 
 // get user profile, together with their belonged groups and events
 router.get('/profile', withAuth, async (req,res) => {
-    console.log(req.session.user_id, req.session.logged_in);
     try {
         const userData = await User.findByPk(req.session.user_id, {
             attributes: { exclude: ['password'] },
@@ -34,25 +33,32 @@ router.get('/profile', withAuth, async (req,res) => {
 // get user events both created and accepted
 router.get('/events', withAuth, async (req,res) => {
     try {
-        const createdeventData = await Event.findAll({where: {
-            created_by: req.session.user_id
-        }});
+        const userDetails = await User.findByPk(req.session.user_id); // Include User details
+
+        const createdeventData = await Event.findAll({
+            where: { created_by: req.session.user_id },
+            include: [{ model: User, as: 'creator' }] // Include User details
+        });
+        
         const created_events = createdeventData.map((item) => {
             return item.get({plain: true})});
-        
-        const acceptedeventData = await Event.findAll({
-            where: {accepted_by: req.session.user_id}
-        });
+
+            const acceptedeventData = await Event.findAll({
+                where: { accepted_by: req.session.user_id },
+                include: [{ model: User, as: 'acceptor' }] // Include User details
+            });
 
         const accepted_events = acceptedeventData.map((item) => {
             return item.get({plain: true})});
 
-        res.render('events', {
-            created_events,
-            accepted_events,
-            logged_in: true, title: 'My events',
-            user_id: req.session.user_id
-        });
+            res.render('events', {
+                userdetails: userDetails.get({ plain: true }),
+                created_events: created_events,
+                accepted_events: accepted_events,
+                logged_in: true, title: 'My events',
+                user_id: req.session.user_id
+            });
+            
     } catch (error) {
         res.status(500).json(error);
     }
