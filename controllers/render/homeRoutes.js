@@ -70,37 +70,52 @@ router.get('/create-event', withAuth, async (req,res) => {
     }
 });
 
-// get all events in the join group
+// get all events in the joined groups
 router.get('/events-feed', async (req,res) => {
     try {
         const groups = await GroupUser.findAll({where: {
             user_id: 3
         }})
-        const groups_id = groups.map((item) => item.group_id);
-        // res.status(200).json(groups_id);
-
-        const membersData = await GroupUser.findAll({where: {group_id: groups_id}})
+        const groups_id = groups.map((item) => item.group_id)
+        const groupuser = groups_id.filter((item, index) => {return groups_id.indexOf(item) == index});
+        var eventsFeed = []
+        groupuser.forEach(id => {
+            eventsFeed.push({group_id: id, user:[], events: []})
+        });
+        const membersData = await GroupUser.findAll({where: {group_id: groups_id}});
         const members = membersData.filter((item) => {
             if(item.user_id !== 3) {
                 return item.user_id
             }
-        }).map((item) => item.user_id)
+        })
+        var member1 = members.map((item) => item.user_id);
+        var member2 = members.map((item) => {return {user: item.user_id, group: item.group_id}});
+        console.log(member2);
+        const Members = member1.filter((item, pos) => {
+            return member1.indexOf(item) == pos;
+        })
+        member2.forEach(member => {
+            eventsFeed.forEach(item => {
+                if(member.group == item.group_id) {
+                    item.user.push(member.user)
+                }
+            }) 
+        });
+        // find all events that created by users in your joined groups, that havent been accepted
+        const allEvents = await Event.findAll({include: [{model: User, as: 'created_user', attributes: {exclude: ['password']}}], where: {created_by: Members, accepted_by: null}})
+        allEvents.forEach(item1 => {
+            eventsFeed.forEach(item2 => {
+                if(item2.user.includes(item1.created_by)) {
+                    item2.events.push(item1)
+                }
+            })
+        })
         
-        const Members = members.filter((item, pos) => {
-            return members.indexOf(item) == pos;
-        })
-
-        const allEvents = await Event.findAll({
-            where: {created_by: Members}
-        })
-        res.status(200).json(allEvents);
-
-        // res.render('eventFeed', {
-        //     userdetails: userdata,
-        //     logged_in: true, title: 'Create an event',
-        //     user_id: req.session.user_id
-        // });
-
+        res.render('eventsFeed', {
+            eventsFeed,
+            logged_in: true, title: 'Events Feed',
+            user_id: req.session.user_id
+        });
     } catch (error) {
         res.status(500).json(error);
     }
