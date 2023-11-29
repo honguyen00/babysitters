@@ -36,14 +36,16 @@ router.get('/profile', withAuth, async (req,res) => {
 // get user events both created and accepted
 router.get('/events', async (req,res) => {
     try {
-        const createdeventData = await Event.findAll({include: {model: User, as: 'created_user', attributes: {exclude: ['password']}}, where: {
+        const userDetails = await User.findByPk(req.session.user_id); 
+
+        const createdeventData = await Event.findAll({include: [{model: User, as: 'accepted_user', attributes: {exclude: ['password']}}], where: {
             created_by: req.session.user_id
         }});
 
         const created_events = createdeventData.map((item) => {
             return item.get({plain: true})});
         
-        const acceptedeventData = await Event.findAll({include: {model: User, as: 'accepted_user', attributes: {exclude: ['password']}}, where: {
+        const acceptedeventData = await Event.findAll({include: {model: User, as: 'created_user', attributes: {exclude: ['password']}}, where: {
             accepted_by: req.session.user_id
         }});
 
@@ -51,6 +53,7 @@ router.get('/events', async (req,res) => {
             return item.get({plain: true})});
 
         res.render('events', {
+            userdetails: userDetails.get({ plain: true }),
             created_events,
             accepted_events,
             logged_in: true, title: 'My events',
@@ -61,7 +64,7 @@ router.get('/events', async (req,res) => {
     }
 });
 
-// get user profile, together with their belonged groups and events
+// render create a new event page
 router.get('/create-event', withAuth, async (req,res) => {
     try {
         res.render('createEvent', {
