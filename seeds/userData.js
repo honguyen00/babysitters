@@ -7,8 +7,8 @@ const userData = [
         email: 'lehonguyen00@gmail.com',
         password: 'Password123?',
         address_line: 'address 1',
-        suburb: 'city postcode',
-        phone_number: 'phonenum',
+        suburb: 'Redfern',
+        phone_number: '0407005040',
         points: 10
     },
     {
@@ -17,8 +17,8 @@ const userData = [
         email: 'tonyashepard@gmail.com',
         password: 'Password123?',
         address_line: 'address 2',
-        suburb: 'city postcode',
-        phone_number: 'phonenum',
+        suburb: 'Redfern',
+        phone_number: '0407005040',
         points: 20
     },
     {
@@ -27,8 +27,8 @@ const userData = [
         email: 'hubertvaughn@gmail.com',
         password: 'Password123?',
         address_line: 'address 3',
-        suburb: 'city postcode',
-        phone_number: 'phonenum',
+        suburb: 'Redfern',
+        phone_number: '0407005040',
         points: 0
     },
     {
@@ -37,8 +37,8 @@ const userData = [
         email: 'lorettaholloway@gmail.com',
         password: 'Password123?',
         address_line: 'address 4',
-        suburb: 'city postcode',
-        phone_number: 'phonenum',
+        suburb: 'Redfern',
+        phone_number: '0407005040',
         points: 5
     },
     {
@@ -47,8 +47,8 @@ const userData = [
         email: 'bridgetvazquez@gmail.com',
         password: 'Password123?',
         address_line: 'address 5',
-        suburb: 'city postcode',
-        phone_number: 'phonenum',
+        suburb: 'Redfern',
+        phone_number: '0407005040',
         points: 5
     },
     {
@@ -57,8 +57,8 @@ const userData = [
         email: 'jeremyrobbins@gmail.com',
         password: 'Password123?',
         address_line: 'address 6',
-        suburb: 'city postcode',
-        phone_number: 'phonenum',
+        suburb: 'Redfern',
+        phone_number: '0407005040',
         points: 0
     },
 ]
