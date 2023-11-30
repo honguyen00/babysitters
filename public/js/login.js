@@ -1,7 +1,7 @@
 const errorMessage = (form, errorP, message) => {
-        form.find(`${errorP}`)[0].innerText = message;
+        form.find(`#${errorP}`)[0].innerText = message;
         setTimeout(() => {
-            form.find(`${errorP}`)[0].innerText = "";
+            form.find(`#${errorP}`)[0].innerText = "";
         }, 1500);
 }
     
@@ -20,13 +20,13 @@ const loginFormHandler = async (event) => {
         });
 
         if(response.ok) {
-            document.location.replace('/');
+            document.location.replace('/home');
         }
         else {
-            errorMessage(loginForm, '#errorMessage1', 'Incorrect email or password!')
+            errorMessage(loginForm, 'errorMessage1', 'Incorrect email or password!')
         }
     } else {
-        errorMessage(loginForm, '#errorMessage1', 'Missing input! Please fill out all fields')
+        errorMessage(loginForm, 'errorMessage1', 'Missing input! Please fill out all fields')
     }
 }
 
@@ -55,7 +55,7 @@ registerForm.on('click', '.progress-control', (event) => {
     phone_number = $('#registerPhone')[0].value.trim();
     if(event.target.innerText == 'Next') {
         if(!first_name || !last_name || !address_line || !suburb || !phone_number) {
-            errorMessage(registerForm, '#errorMessage2', 'Missing input! Please fill out all fields.');
+            errorMessage(registerForm, 'errorMessage2', 'Missing input! Please fill out all fields.');
             return
         } else {
             renderForm(++stepNumber, stepNumber-1)
@@ -79,11 +79,11 @@ registerForm.on('submit', async (event) => {
     var password = $('#registerPassword')[0].value.trim();
     var confirmed = $('#confirmedPassword')[0].value.trim();
     if(!email || !password || !confirmed ) {
-        errorMessage(registerForm, '#errorMessage3', 'Missing input! Please fill out all fields');
+        errorMessage(registerForm, 'errorMessage3', 'Missing input! Please fill out all fields');
         return;
     }
     if((password !== confirmed)) {
-        errorMessage(registerForm, '#errorMessage3', 'Password does not match!');
+        errorMessage(registerForm, 'errorMessage3', 'Password does not match!');
         return;
     } 
     else {
@@ -94,12 +94,12 @@ registerForm.on('submit', async (event) => {
         });
 
         if(response.ok) {
-            document.location.replace('/');
+            document.location.replace('/home');
         } else if (response.status === 403) {
-            errorMessage(registerForm, '#errorMessage3', 'Email has already existed! Please sign in instead.');
+            errorMessage(registerForm, 'errorMessage3', 'Email has already existed! Please sign in instead.');
             return;
         } else {
-            errorMessage(registerForm, '#errorMessage3', 'Could not create a new account! Please try again.')
+            errorMessage(registerForm, 'errorMessage3', 'Could not create a new account! Please try again.')
             return;
         }
     }

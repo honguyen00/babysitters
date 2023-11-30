@@ -1,6 +1,10 @@
 h2 {
     margin-bottom: 1rem;
 }
+
+body {
+    scrollbar-gutter: auto 
+}
 /* ===================================== */
 /* Progress bar for signup form */
 #progressBar {

@@ -34,7 +34,7 @@ router.get('/profile', withAuth, async (req,res) => {
 });
 
 // get user events both created and accepted
-router.get('/events', async (req,res) => {
+router.get('/events', withAuth, async (req,res) => {
     try {
         const userDetails = await User.findByPk(req.session.user_id); 
 
