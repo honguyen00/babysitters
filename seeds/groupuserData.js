@@ -24,6 +24,10 @@ const groupuserData = [
     {
         group_id: 1,
         user_id: 4,
+    },
+    {
+        group_id: 3,
+        user_id: 4,
     }
 ]
 

@@ -32,9 +32,7 @@ router.get('/:id', async (req, res) => {
 //create a new user
 router.post('/', async (req, res) => {
     try {
-        const [userData, created] = await User.findOrCreate({where: {email: req.body.email}, defaults: {
-            ...req.body
-        }});
+        const [userData, created] = await User.findOrCreate({where: {email: req.body.email}, defaults: {...req.body}});
         if(created) {
             req.session.save(() => {
                 req.session.user_id = userData.id;
@@ -93,8 +91,7 @@ router.post('/login', async (req, res) => {
         req.session.save(() => {
             req.session.user_id = userData.id;
             req.session.logged_in = true;
-
-            res.json({user: userData, message: 'Logged in successfully!'})
+            res.status(200).json({user: userData, message: 'Logged in successfully!'})
         });
     } catch (error) {
         res.status(500).json(error);

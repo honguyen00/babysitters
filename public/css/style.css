@@ -225,6 +225,10 @@ footer{
 h2 {
     margin-bottom: 1rem;
 }
+
+body {
+    scrollbar-gutter: auto 
+}
 /* ===================================== */
 /* Progress bar for signup form */
 #progressBar {
@@ -282,7 +286,6 @@ ul {
     color: white;
 }
 
-/* ================================= */
 /* line break */
 .line-break {
    width: 100%; 
@@ -341,4 +344,18 @@ ul {
         justify-content: center;
         text-align: center;
     }
+}
+=======
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.card-body {
+    padding: 2px 16px;
 }

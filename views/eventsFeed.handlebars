@@ -1,0 +1,15 @@
+<input type="hidden" class="userId" id="userId" value="{{user_id}}"> 
+<div class="container mt-4">
+    <h1>Events Feed</h1>
+    <div class="d-flex flex-wrap">
+<!-- In views/eventFeed.handlebars -->
+{{#each events}}
+    {{> eventCard this.events}}
+{{else}}
+    <p>No events to show.</p>
+{{/each}}
+
+    </div>
+</div>
+
+<script src="/js/eventFeed.js"></script>

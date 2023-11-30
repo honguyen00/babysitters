@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "animejs": "^3.2.2",
     "bcrypt": "^5.1.1",
     "bootstrap-icons": "^1.11.2",
     "connect-session-sequelize": "^7.1.7",

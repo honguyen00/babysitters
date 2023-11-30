@@ -2,8 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { Group, GroupUser, User, Event } = require('../../models');
-// const EventController = require('../eventController');
-
+const withAuth = require('../../utils/auth');
 
 // GET all events
 router.get('/', async (req, res) => {
@@ -27,12 +26,16 @@ router.get('/:id', async (req, res) => {
   });
 
 // POST a new event
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
   try {
     const newEvent = await Event.create({...req.body, created_by: req.session.user_id});
-    res.status(201).json(newEvent);
+    if (newEvent) {
+      res.status(201).json({data: newEvent, message: 'Create new event successfully'});
+    } else {
+      res.status(400).json({message: 'Cound not create a new event'})
+    }
   } catch (error) {
-    res.status(400).json(error);
+    res.status(500).json(error);
   }
 });
 
@@ -45,7 +48,7 @@ router.put('/:id', async (req, res) => {
     } catch (error) {
       res.status(400).json(error);
     }
-  });
+});
 
 // DELETE an event by ID
 router.delete('/:id', async (req, res) => {
@@ -59,42 +62,3 @@ router.delete('/:id', async (req, res) => {
   });
 
 module.exports = router;
-
-
-
-// // GET an event by ID
-// router.get('/events/:id', async (req, res) => {
-//     try {
-//       const eventId = req.params.id; // Assuming the event ID is in the route parameters
-
-//       // Implement logic to get event details, including associated user and group
-//       const eventData = await Event.findByPk(eventId, {
-//         include: [{ model: User }, { model: Group }],
-//       });
-
-//       const event = eventData.get({ plain: true });
-
-//       res.render('eventDetails', {
-//         ...event,
-//         title: 'Event Details',
-//       });
-//     } catch (error) {
-//       res.status(500).json(error);
-//     }
-//   },
-// );
-
-
-// // GET all events
-// router.get('/events', async (req, res) => {
-//     try {
-//       const events = await Event.findAll({
-//         // include: [{ model: User }, { model: Group }],
-//       });
-
-//       res.render('allEvents', { events, title: 'All Events' });
-//     } catch (error) {
-//       res.status(500).json(error);
-//     }
-//   },
-// );

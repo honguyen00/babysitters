@@ -28,7 +28,7 @@ Event.init(
     },
     description: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
     },
     status: {
       type: DataTypes.STRING,
