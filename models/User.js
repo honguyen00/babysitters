@@ -47,9 +47,6 @@ User.init(
         phone_number: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                isNumeric: true
-            }
         },
         points: {
             type: DataTypes.INTEGER,

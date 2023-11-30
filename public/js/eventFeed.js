@@ -1,11 +1,12 @@
+// accepting an available event
 function updateEventStatus(eventId, newStatus) {
     // Replace with your API endpoint and request body as necessary
-    fetch(`/api/update-event/${eventId}`, {
-        method: 'POST',
+    fetch(`/api/events/${eventId}`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ isOpen: newStatus })
+        body: JSON.stringify({ status: 'accepted', accepted_by: $('#userId').val() })
     })
     .then(response => response.json())
     .then(data => {
@@ -23,6 +24,7 @@ function updateEventStatus(eventId, newStatus) {
         console.error('Error:', error);
     });
 }
+
 
 function animateStatusChange(eventId, isOpen) {
     var button = document.getElementById(`eventButton-${eventId}`);

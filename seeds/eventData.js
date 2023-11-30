@@ -9,7 +9,6 @@ const eventData = [
         description: 'test event 1 description',
         status: 'available',
         created_by: 1,
-        accepted_by: 2
     }, 
     {
         title: 'test event 2',
@@ -19,7 +18,6 @@ const eventData = [
         description: 'test event 2 description',
         status: 'accepted',
         created_by: 1,
-        accepted_by: 3
     }, 
     {
         title: 'test event 3',
@@ -29,7 +27,6 @@ const eventData = [
         description: 'test event 3 description',
         status: 'available',
         created_by: 2,
-        accepted_by: 1
     }, 
     {
         title: 'test event 4',
@@ -39,7 +36,6 @@ const eventData = [
         description: 'test event 4 description',
         status: 'available',
         created_by: 3,
-        accepted_by: 2
     }, 
 ];
 
