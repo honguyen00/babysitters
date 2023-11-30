@@ -80,7 +80,7 @@ router.get('/create-event', withAuth, async (req,res) => {
 router.get('/home', async (req,res) => {
     try {
         const groups = await GroupUser.findAll({where: {
-            user_id: 3
+            user_id: req.session.user_id
         }})
         const groups_id = groups.map((item) => item.group_id).sort();
         const groupuser = groups_id.filter((item, index) => {return groups_id.indexOf(item) == index});
@@ -115,7 +115,6 @@ router.get('/home', async (req,res) => {
                 }
             })
         })
-
         res.render('eventsFeed', {
             eventsFeed,
             logged_in: true, title: 'Home Feed',
