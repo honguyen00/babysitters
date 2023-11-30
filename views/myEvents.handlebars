@@ -1,29 +1,16 @@
 <div class="container mt-4">
-    <h1>My Created Events</h1>
-    <h5>{{userdetails.first_name}} {{userdetails.last_name}} Events</h5>
+    <h1>{{userdetails.first_name}} {{userdetails.last_name}}'s Events</h1>
+    <h2>Created Events</h2>
     <div class="d-flex flex-wrap">
-    {{#each created_events}}
-    <div class="card" style="width: 30%; margin: 1%;">
-    <div class="card-body">
-        <h5 class="card-title">Host: {{userdetails.first_name}} {{userdetails.last_name}}</h5>
-        <p class="card-text">Description: {{this.description}}</p>
-        <p class="card-text">Date: {{this.date}}</p>
-        <p class="card-text">Time: {{this.start_time}} - {{this.end_time}}</p>
+        {{#each created_events}}
+            {{> eventCard this}}
+        {{/each}}
     </div>
-    {{/each}}
-</div>
 
-<div class="container mt-4">
-    <h1>My Accepted Events</h1>
-    <h5>{{userdetails.first_name}} {{userdetails.last_name}} Events</h5>
+    <h2>Accepted Events</h2>
     <div class="d-flex flex-wrap">
-    {{#each accepted_events}}
-    <div class="card" style="width: 30%; margin: 1%;">
-    <div class="card-body">
-        <h5 class="card-title">Host: {{userdetails.first_name}} {{userdetails.last_name}}</h5>
-        <p class="card-text">Description: {{this.description}}</p>
-        <p class="card-text">Date: {{this.date}}</p>
-        <p class="card-text">Time: {{this.start_time}} - {{this.end_time}}</p>
+        {{#each accepted_events}}
+            {{> eventCard this}}
+        {{/each}}
     </div>
-    {{/each}}
 </div>

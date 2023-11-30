@@ -1,0 +1,18 @@
+<!-- partials/eventCard.handlebars -->
+<div class="card" style="width: 30%; margin: 1%;">
+    <div class="card-body">
+        <h5 class="card-title">Host: {{userdetails.first_name}} {{userdetails.last_name}}</h5>
+        <p class="card-text">Description: {{description}}</p>
+        <p class="card-text">Date: {{date}}</p>
+        <p class="card-text">Time: {{start_time}} - {{end_time}}</p>
+        <p class="card-text">Location: {{userdetails.suburb}}</p>
+        <p class="card-text">Contact: {{userdetails.phone_number}}</p>
+        <button id="eventButton-{{this.id}}" 
+                data-event-id="{{this.id}}" 
+                data-new-status="{{#if this.is_open}}false{{else}}true{{/if}}"
+                class="btn {{#if this.is_open}}btn-primary{{else}}btn-secondary{{/if}}">
+            {{#if this.is_open}}OPEN{{else}}BOOKED{{/if}} - ACCEPT
+        </button>
+    </div>
+</div>
+{{log this}}

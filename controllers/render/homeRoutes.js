@@ -34,29 +34,36 @@ router.get('/profile', withAuth, async (req,res) => {
 });
 
 // get user events both created and accepted
-router.get('/my-events', async (req,res) => {
+router.get('/my-events', async (req, res) => {
     try {
         const userDetails = await User.findByPk(req.session.user_id); 
 
-        const createdeventData = await Event.findAll({include: [{model: User, as: 'accepted_user', attributes: {exclude: ['password']}}], where: {
-            created_by: req.session.user_id
-        }});
-
-        const created_events = createdeventData.map((item) => {
-            return item.get({plain: true})});
+        // Fetching events created by the user
+        const createdeventData = await Event.findAll({
+            include: [{model: User, as: 'created_user', attributes: {exclude: ['password']}}],
+            where: { created_by: req.session.user_id }
+        });
+        const created_events = createdeventData.map(item => ({
+            ...item.get({ plain: true }),
+            userdetails: item.created_user // Assuming this is the correct association
+        }));
         
-        const acceptedeventData = await Event.findAll({include: {model: User, as: 'created_user', attributes: {exclude: ['password']}}, where: {
-            accepted_by: req.session.user_id
-        }});
-
-        const accepted_events = acceptedeventData.map((item) => {
-            return item.get({plain: true})});
+        // Fetching events accepted by the user
+        const acceptedeventData = await Event.findAll({
+            include: [{model: User, as: 'accepted_user', attributes: {exclude: ['password']}}],
+            where: { accepted_by: req.session.user_id }
+        });
+        const accepted_events = acceptedeventData.map(item => ({
+            ...item.get({ plain: true }),
+            userdetails: item.accepted_user // Assuming this is the correct association
+        }));
         
         res.render('events', {
             userdetails: userDetails.get({ plain: true }),
             created_events,
             accepted_events,
-            logged_in: true, title: 'My events',
+            logged_in: true, 
+            title: 'My events',
             user_id: req.session.user_id
         });
     } catch (error) {
@@ -90,7 +97,7 @@ router.get('/home', async (req,res) => {
         });
         const membersData = await GroupUser.findAll({where: {group_id: groups_id}});
         const members = membersData.filter((item) => {
-            if(item.user_id !== 3) {
+            if(item.user_id !== req.session.user_id) {
                 return item.user_id
             }
         })
@@ -107,14 +114,23 @@ router.get('/home', async (req,res) => {
             }) 
         });
         // find all events that created by users in your joined groups, that havent been accepted
-        const allEvents = await Event.findAll({include: [{model: User, as: 'created_user', attributes: {exclude: ['password']}}], where: {created_by: Members, accepted_by: null}})
+        const allEvents = await Event.findAll({
+            include: [{model: User, as: 'created_user', attributes: {exclude: ['password']}}],
+            where: {created_by: Members, accepted_by: null}
+        });
+        
         allEvents.forEach(item1 => {
             eventsFeed.forEach(item2 => {
                 if(item2.user.includes(item1.created_by)) {
-                    item2.events.push(item1)
+                    const eventWithDetails = {
+                        ...item1.dataValues,
+                        userdetails: item1.created_user.dataValues
+                    };
+                    item2.events.push(eventWithDetails);
                 }
-            })
-        })
+            });
+        });        
+
         res.render('eventsFeed', {
             eventsFeed,
             logged_in: true, title: 'Home Feed',
