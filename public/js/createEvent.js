@@ -1,9 +1,5 @@
-const errorMessage = (form, errorP, message) => {
-    form.find(`#${errorP}`)[0].innerText = message;
-    setTimeout(() => {
-        form.find(`#${errorP}`)[0].innerText = "";
-    }, 1500);
-}
+import errorMessage  from './errorHandler.js';
+
 
 const eventForm = $('#eventForm');
 const handlecreateEvent = async (event) => { 
