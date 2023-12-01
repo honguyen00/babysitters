@@ -1,19 +1,40 @@
-<!-- views/createGroup.handlebars -->
-<div class="container mt-4">
-    <h1>Create Group</h1>
-    <form id="createGroupForm">
-        <div class="form-group">
-            <label for="groupName">Group Name</label>
-            <input type="text" class="form-control" id="groupName" name="groupName" required>
-        </div>
-        <div class="form-group">
-            <label for="groupUsers">Add Group Users</label>
-            <input type="text" class="form-control" id="groupUsersInput" placeholder="Search Users">
-            <ul id="groupUsersList" class="list-group mt-2">
-            </ul>
-        </div>
-        <button type="submit" class="btn btn-primary">Create Group</button>
-    </form>
+{{!-- FRONT Questionnaire--}}
+<div class="container mt-5">
+  <a href=""><h2>Create a group<i class="fa-solid fa-plus ml-2"></i></h2></a> 
 </div>
 
-<script src="/js/createGroup.js"></script>
+<div class="container mt-5">
+  <h2 class="mb-4">My Groups</h2>
+  
+  <div class="row">
+    <div class="col-md-4">
+        <div class="card" style="background-color: #FFBE74;">
+          <div class="card-body">
+            <h5 class="card-title" id="name">Group 1</h5>
+            <p>Number of users:</p><p id="number_of_users">3</p>
+            <p class="card-text">Some description about Member 1.</p>
+          </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card" style="background-color: #FFBE74;">
+          <div class="card-body">
+            <h5 class="card-title" id="name">Group 2</h5>
+            <p>Number of users:</p><p id="number_of_users">5</p>
+            <p class="card-text">Some description about Member 2.</p>
+          </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card" style="background-color: #FFBE74;">
+          <div class="card-body">
+            <h5 class="card-title" id="name">Group 3</h5>
+            <p>Number of users:</p><p id="number_of_users">0</p>
+            <p class="card-text" id="interests">Some description about Member 3.</p>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

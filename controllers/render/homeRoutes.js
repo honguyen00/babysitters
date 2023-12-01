@@ -136,6 +136,20 @@ router.get('/home', async (req,res) => {
     }
 });
 
+router.get('/create-group', withAuth, (req, res) => {
+    res.render('createGroup', {
+        user_id: req.session.user_id,
+        logged_in: true,
+    })
+})
+
+router.get('/add-member', withAuth, (req, res) => {
+    res.render('addMembers', {
+        user_id: req.session.user_id,
+        logged_in: true,
+    })
+})
+
 // getting login page
 router.get('/login', (req, res) => {
     // if already logged in, redirect to homepage
