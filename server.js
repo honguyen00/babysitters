@@ -11,6 +11,11 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const hbs = exphbs.create({
   defaultLayout: 'main',
+  helpers: {
+    is_eq: function(value1, value2) {
+      return value1 == value2;
+    }
+  }
 });
 
 const app = express();

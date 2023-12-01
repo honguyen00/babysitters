@@ -1,18 +1,27 @@
+<input type="hidden" class="userId" id="userId" value="{{userdetails.id}}"> 
 <div class="container mt-4">
     <h1>{{userdetails.first_name}} {{userdetails.last_name}}'s Events</h1>
     <h2>Created Events</h2>
-    <div class="d-flex flex-wrap">
-        {{#each created_events}}
-            {{> eventCard this}}
+    <div class="d-flex events-container created-event-container">
+        {{#if created_events}}
+        {{#each created_events as |event|}}
+            {{> myEventCard event }}
         {{/each}}
+        {{else}}
+        <p>You have not created any events</p>
+        {{/if}}
     </div>
 
     <h2>Accepted Events</h2>
-    <div class="d-flex flex-wrap">
-        {{#each accepted_events}}
-            {{> eventCard this}}
+    <div class="d-flex events-container accepted-event-container">
+        {{#if accepted_events}}
+        {{#each accepted_events as |event|}}
+            {{> myEventCard event }}
         {{/each}}
+        {{else}} 
+        <p>You have not accepted any events</p>
+        {{/if}}
     </div>
 </div>
 
-<script src="/js/eventFeed.js"></script>
+<script src="/js/deleteEvent.js"></script>

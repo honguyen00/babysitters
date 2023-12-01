@@ -36,11 +36,12 @@ router.get('/profile', withAuth, async (req,res) => {
 // get user events both created and accepted
 router.get('/my-events', async (req, res) => {
     try {
-        const userDetails = await User.findByPk(req.session.user_id); 
+        const userData = await User.findByPk(req.session.user_id, {attributes: {exclude: ['password']}});
 
         // Fetching events created by the user
         const createdeventData = await Event.findAll({
-            include: [{model: User, as: 'accepted_user', attributes: {exclude: ['password']}}],
+            include: [{model: User, as: 'accepted_user', attributes: {exclude: ['password']}},
+            {model: User, as: 'created_user', attributes: {exclude: ['password']}}],
             where: { created_by: req.session.user_id }
         });
 
@@ -48,13 +49,14 @@ router.get('/my-events', async (req, res) => {
         
         // Fetching events accepted by the user
         const acceptedeventData = await Event.findAll({
-            include: [{model: User, as: 'created_user', attributes: {exclude: ['password']}}],
+            include: [{model: User, as: 'created_user', attributes: {exclude: ['password']}},
+            {model: User, as: 'accepted_user', attributes: {exclude: ['password']}}],
             where: { accepted_by: req.session.user_id }
         });
         const accepted_events = acceptedeventData.map(item => item.get({ plain: true }));
         
-        res.render('events', {
-            userdetails: userDetails.get({ plain: true }),
+        res.render('myEvents', {
+            userdetails: userData.get({plain: true}),
             created_events,
             accepted_events,
             logged_in: true, 
@@ -126,7 +128,7 @@ router.get('/home', async (req,res) => {
 
         res.render('eventsFeed', {
             eventsFeed,
-            logged_in: true, title: 'Home Feed',
+            logged_in: true, title: 'Home/Events Feed',
             user_id: req.session.user_id
         });
     } catch (error) {
