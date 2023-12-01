@@ -1,0 +1,49 @@
+<div class="container mt-5">
+  <h2>Group Questionnaire</h2>
+  <form>
+    <!-- Question 1 -->
+    <div class="form-group">
+      <label for="name">Your Full Name:</label>
+      <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="form-group">
+      <label for="email">Email Address:</label>
+      <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+
+
+    <!-- Question 3 -->
+    <div class="form-group">
+      <label>Select your preferred role in the group:</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="role" id="leader" value="leader" required>
+        <label class="form-check-label" for="leader">Group Leader</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="role" id="member" value="member" required>
+        <label class="form-check-label" for="member">Group Member</label>
+      </div>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="form-group">
+      <label for="interests">List your interests or skills that you can bring to the group:</label>
+      <textarea class="form-control" id="interests" name="interests" rows="3" required></textarea>
+    </div>
+
+    <!-- Additional People Section -->
+    <hr>
+    <h3>Additional People</h3>
+    <div id="people-container">
+      <!-- Additional people will be added dynamically here -->
+    </div>
+    <button type="button" class="btn btn-secondary mb-3 btn-block col-12 col-md-2" onclick="addPerson()">Add Person</button>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary btn-block col-12 col-md-2">Submit</button>
+  </form>
+</div>
+
+

@@ -1,3 +1,47 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Anime.js animations
+    initializeAnimations();
+
+    // Event listener for event buttons
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('event-button')) {
+            const eventId = e.target.getAttribute('data-event-id');
+            const isOpen = e.target.classList.contains('open');
+
+            if (isOpen) {
+                updateEventStatus(eventId, false); // false indicates the event is no longer open
+            }
+        }
+    });
+});
+
+function initializeAnimations() {
+    // Anime.js animations for open and booked buttons
+    anime({
+        targets: '.open', // Targets open buttons
+        boxShadow: [
+            { value: '0 0 5px rgba(0, 255, 0, 1)' },
+            { value: '0 0 25px rgba(0, 255, 0, 1)' },
+            { value: '0 0 5px rgba(0, 255, 0, 1)' },
+        ],
+        easing: 'easeInOutSine',
+        duration: 1500,
+        loop: true
+    });
+
+    anime({
+        targets: '.booked', // Targets booked buttons
+        boxShadow: [
+            { value: '0 0 5px rgba(255, 0, 0, 1)' },
+            { value: '0 0 25px rgba(255, 0, 0, 1)' },
+            { value: '0 0 5px rgba(255, 0, 0, 1)' },
+        ],
+        easing: 'easeInOutSine',
+        duration: 1500,
+        loop: true
+    });
+}
+
 // accepting an available event
 function updateEventStatus(eventId, newStatus) {
     // Replace with your API endpoint and request body as necessary
@@ -10,46 +54,35 @@ function updateEventStatus(eventId, newStatus) {
     })
     .then(response => response.json())
     .then(data => {
-        // Assuming the server sends back a success response
         if (data.success) {
-            // Animate the status change on the button
-            animateStatusChange(eventId, newStatus);
+            // Update the button's class and text
+            let button = document.getElementById(`eventButton-${eventId}`);
+            if (button) {
+                button.classList.remove('btn-primary', 'open');
+                button.classList.add('btn-secondary', 'booked');
+                button.textContent = 'BOOKED';
+                button.disabled = true; // Optionally disable the button
+
+                // Trigger the glow animation for the booked button
+                animateGlow(button);
+            }
         } else {
-            // Handle any errors or unsuccessful updates
             console.error('Failed to update event status');
         }
     })
-    .catch(error => {
-        // Handle network or other errors here
-        console.error('Error:', error);
+    .catch(error => console.error('Error:', error));
+}
+
+function animateGlow(button) {
+    anime({
+        targets: button,
+        boxShadow: [
+            { value: '0 0 5px rgba(255, 0, 0, 1)' },
+            { value: '0 0 25px rgba(255, 0, 0, 1)' },
+            { value: '0 0 5px rgba(255, 0, 0, 1)' },
+        ],
+        easing: 'easeInOutSine',
+        duration: 1500,
+        loop: true
     });
 }
-
-
-function animateStatusChange(eventId, isOpen) {
-    var button = document.getElementById(`eventButton-${eventId}`);
-    if (button) {
-        // Change button class and text according to new status
-        button.classList.toggle('btn-primary', isOpen);
-        button.classList.toggle('btn-secondary', !isOpen);
-        button.textContent = (isOpen ? 'OPEN' : 'BOOKED') + ' - ACCEPT';
-
-        // Anime.js animation
-        anime({
-            targets: button,
-            scale: [1, 1.2, 1], // Temporarily increase scale to 1.2 then back to 1
-            duration: 500,
-            easing: 'easeInOutQuad'
-        });
-    }
-}
-
-// Use event delegation
-document.addEventListener('click', function(e) {
-    if (e.target && e.target.id.startsWith('eventButton-')) {
-        const eventId = e.target.getAttribute('data-event-id');
-        const newStatus = e.target.getAttribute('data-new-status') === 'true';
-
-        updateEventStatus(eventId, newStatus);
-    }
-});

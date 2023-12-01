@@ -17,3 +17,18 @@
     </div>
 </div>
 
+        <p class="card-text">Location: {{userdetails.suburb}}</p>
+        <p class="card-text">Contact: {{userdetails.phone_number}}</p>
+        {{#if this.is_open}}
+            <button id="eventButton-{{this.id}}"
+                    data-event-id="{{this.id}}"
+                    class="btn event-button btn-primary open">
+                OPEN - ACCEPT
+            </button>
+        {{else}}
+            <button disabled class="btn event-button btn-secondary booked">
+                BOOKED
+            </button>
+        {{/if}}
+    </div>
+</div>
