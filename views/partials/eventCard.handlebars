@@ -1,12 +1,13 @@
 <!-- partials/eventCard.handlebars -->
+{{log this}}
 <div class="card" style="width: 30%; margin: 1%;">
     <div class="card-body">
-        <h5 class="card-title">Host: {{userdetails.first_name}} {{userdetails.last_name}}</h5>
+        <h5 class="card-title">Host: {{this.created_user.first_name}} {{this.created_user.last_name}}</h5>
         <p class="card-text">Description: {{description}}</p>
         <p class="card-text">Date: {{date}}</p>
         <p class="card-text">Time: {{start_time}} - {{end_time}}</p>
-        <p class="card-text">Location: {{userdetails.suburb}}</p>
-        <p class="card-text">Contact: {{userdetails.phone_number}}</p>
+        <p class="card-text">Location: {{this.created_user.suburb}}</p>
+        <p class="card-text">Contact: {{this.created_user.phone_number}}</p>
         <button id="eventButton-{{this.id}}" 
                 data-event-id="{{this.id}}" 
                 data-new-status="{{#if this.is_open}}false{{else}}true{{/if}}"
@@ -15,4 +16,4 @@
         </button>
     </div>
 </div>
-{{log this}}
+

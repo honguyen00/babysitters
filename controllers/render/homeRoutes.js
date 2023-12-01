@@ -40,23 +40,18 @@ router.get('/my-events', async (req, res) => {
 
         // Fetching events created by the user
         const createdeventData = await Event.findAll({
-            include: [{model: User, as: 'created_user', attributes: {exclude: ['password']}}],
+            include: [{model: User, as: 'accepted_user', attributes: {exclude: ['password']}}],
             where: { created_by: req.session.user_id }
         });
-        const created_events = createdeventData.map(item => ({
-            ...item.get({ plain: true }),
-            userdetails: item.created_user // Assuming this is the correct association
-        }));
+
+        const created_events = createdeventData.map(item => item.get({ plain: true }));
         
         // Fetching events accepted by the user
         const acceptedeventData = await Event.findAll({
-            include: [{model: User, as: 'accepted_user', attributes: {exclude: ['password']}}],
+            include: [{model: User, as: 'created_user', attributes: {exclude: ['password']}}],
             where: { accepted_by: req.session.user_id }
         });
-        const accepted_events = acceptedeventData.map(item => ({
-            ...item.get({ plain: true }),
-            userdetails: item.accepted_user // Assuming this is the correct association
-        }));
+        const accepted_events = acceptedeventData.map(item => item.get({ plain: true }));
         
         res.render('events', {
             userdetails: userDetails.get({ plain: true }),
@@ -101,6 +96,7 @@ router.get('/home', async (req,res) => {
                 return item.user_id
             }
         })
+
         var member1 = members.map((item) => item.user_id);
         var member2 = members.map((item) => {return {user: item.user_id, group: item.group_id}});
         const Members = member1.filter((item, pos) => {
@@ -113,23 +109,20 @@ router.get('/home', async (req,res) => {
                 }
             }) 
         });
+        
         // find all events that created by users in your joined groups, that havent been accepted
         const allEvents = await Event.findAll({
             include: [{model: User, as: 'created_user', attributes: {exclude: ['password']}}],
             where: {created_by: Members, accepted_by: null}
-        });
+        })
         
         allEvents.forEach(item1 => {
             eventsFeed.forEach(item2 => {
                 if(item2.user.includes(item1.created_by)) {
-                    const eventWithDetails = {
-                        ...item1.dataValues,
-                        userdetails: item1.created_user.dataValues
-                    };
-                    item2.events.push(eventWithDetails);
+                    item2.events.push(item1.get({plain: true}));
                 }
             });
-        });        
+        });     
 
         res.render('eventsFeed', {
             eventsFeed,
