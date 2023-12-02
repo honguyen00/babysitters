@@ -36,30 +36,27 @@ router.get('/profile', withAuth, async (req,res) => {
 // get user events both created and accepted
 router.get('/my-events', async (req, res) => {
     try {
-        const userDetails = await User.findByPk(req.session.user_id); 
+        const userData = await User.findByPk(req.session.user_id, {attributes: {exclude: ['password']}});
 
         // Fetching events created by the user
         const createdeventData = await Event.findAll({
-            include: [{model: User, as: 'created_user', attributes: {exclude: ['password']}}],
+            include: [{model: User, as: 'accepted_user', attributes: {exclude: ['password']}},
+            {model: User, as: 'created_user', attributes: {exclude: ['password']}}],
             where: { created_by: req.session.user_id }
         });
-        const created_events = createdeventData.map(item => ({
-            ...item.get({ plain: true }),
-            userdetails: item.created_user // Assuming this is the correct association
-        }));
+
+        const created_events = createdeventData.map(item => item.get({ plain: true }));
         
         // Fetching events accepted by the user
         const acceptedeventData = await Event.findAll({
-            include: [{model: User, as: 'accepted_user', attributes: {exclude: ['password']}}],
+            include: [{model: User, as: 'created_user', attributes: {exclude: ['password']}},
+            {model: User, as: 'accepted_user', attributes: {exclude: ['password']}}],
             where: { accepted_by: req.session.user_id }
         });
-        const accepted_events = acceptedeventData.map(item => ({
-            ...item.get({ plain: true }),
-            userdetails: item.accepted_user // Assuming this is the correct association
-        }));
+        const accepted_events = acceptedeventData.map(item => item.get({ plain: true }));
         
-        res.render('events', {
-            userdetails: userDetails.get({ plain: true }),
+        res.render('myEvents', {
+            userdetails: userData.get({plain: true}),
             created_events,
             accepted_events,
             logged_in: true, 
@@ -101,6 +98,7 @@ router.get('/home', async (req,res) => {
                 return item.user_id
             }
         })
+
         var member1 = members.map((item) => item.user_id);
         var member2 = members.map((item) => {return {user: item.user_id, group: item.group_id}});
         const Members = member1.filter((item, pos) => {
@@ -113,33 +111,44 @@ router.get('/home', async (req,res) => {
                 }
             }) 
         });
+        
         // find all events that created by users in your joined groups, that havent been accepted
         const allEvents = await Event.findAll({
             include: [{model: User, as: 'created_user', attributes: {exclude: ['password']}}],
             where: {created_by: Members, accepted_by: null}
-        });
+        })
         
         allEvents.forEach(item1 => {
             eventsFeed.forEach(item2 => {
                 if(item2.user.includes(item1.created_by)) {
-                    const eventWithDetails = {
-                        ...item1.dataValues,
-                        userdetails: item1.created_user.dataValues
-                    };
-                    item2.events.push(eventWithDetails);
+                    item2.events.push(item1.get({plain: true}));
                 }
             });
-        });        
+        });     
 
         res.render('eventsFeed', {
             eventsFeed,
-            logged_in: true, title: 'Home Feed',
+            logged_in: true, title: 'Home/Events Feed',
             user_id: req.session.user_id
         });
     } catch (error) {
         res.status(500).json(error);
     }
 });
+
+router.get('/create-group', withAuth, (req, res) => {
+    res.render('createGroup', {
+        user_id: req.session.user_id,
+        logged_in: true,
+    })
+})
+
+router.get('/add-member', withAuth, (req, res) => {
+    res.render('addMembers', {
+        user_id: req.session.user_id,
+        logged_in: true,
+    })
+})
 
 // getting login page
 router.get('/login', (req, res) => {

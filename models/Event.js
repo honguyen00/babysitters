@@ -32,7 +32,7 @@ Event.init(
     },
     status: {
       type: DataTypes.STRING,
-      defaultValue: 'available', // Default status is 'available'
+      defaultValue: 'open', // Default status is 'available'
     },
     //Foreign keys
     created_by: {

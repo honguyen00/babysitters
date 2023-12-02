@@ -37,7 +37,7 @@ const handlecreateEvent = async (event) => {
         });
 
         if(response.ok) {
-            document.location.replace('/events')
+            document.location.replace('/my-events')
         } else {
             errorMessage(eventForm, 'errorMessage', 'Could not create a new event! Please wait and try again later.')
             return;

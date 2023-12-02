@@ -1,21 +1,22 @@
 <input type="hidden" class="userId" id="userId" value="{{user_id}}"> 
-<div class="container mt-4">
-    <h1>Events Feed</h1>
+<div class="container mt-4 d-flex flex-column" id="eventFeed">
+<h1>Events Feed</h1>
     {{#if eventsFeed}}
-        <div class="d-flex flex-wrap">
-            {{#each eventsFeed}}
-                {{#if this.events.length}}
-                    {{#each this.events as |event|}}
+            {{#each eventsFeed as |group|}}
+            <h2 class="w-100">Group {{group.group_id}}</h2>
+            <div class="events-container d-flex">
+                {{#if group.events.length}}
+                    {{#each group.events as |event|}}
                         {{> eventCard event}}
                     {{/each}}
                 {{else}}
-                    <p>No events in group {{this.group_id}}.</p>
+                    <p>No events available in this group.</p>
                 {{/if}}
+            </div>
             {{/each}}
-        </div>
     {{else}}
         <p>No events to show.</p>
     {{/if}}
 </div>
 
-<script src="/js/eventFeed.js"></script>
+<script src="/js/acceptEvent.js"></script>
