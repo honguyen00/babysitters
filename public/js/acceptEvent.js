@@ -14,8 +14,8 @@ function initializeAnimations() {
     // Subtle scale transform for open buttons
     anime({
         targets: '.open',
-        scale: [1, 1.10], // Scale from 100% to 105%
-        duration: 2000,
+        scale: [1, 1.05], // Scale from 100% to 105%
+        duration: 1000,
         easing: 'easeInOutQuad',
         direction: 'alternate', // Alternate between scaling up and down
         loop: true
@@ -41,17 +41,31 @@ function updateEventStatus(eventId) {
     .catch(error => console.error('Error:', error));
 }
 
-$(document).ready(function() {
-    $('.more-btn').click(function() {
-        // This changes the button text from "see more details" to "see less" and vice versa
-        $(this).text(function(i, text){
-            return text === "see more details" ? "see less" : "see more details";
+// $(document).ready(function() {
+//     $('.more-btn').click(function() {
+//         // This changes the button text from "see more details" to "see less" and vice versa
+//         $(this).text(function(i, text){
+//             return text === "see more details" ? "see less" : "see more details";
+//         });
+//         // This toggles the visibility of the 'card-content' element within the same 'event-card'
+//         if ($(this).text() === "see less") {
+//             $(this).closest('.event-card').find('.card-content').removeClass('hidden');
+//         } else {
+//             $(this).closest('.event-card').find('.card-content').addClass('hidden');
+//         }
+//     });
+// });
+
+$('.more-btn').on('click', (event) => {
+    //This changes the button text from "see more details" to "see less" and vice versa
+    console.log('more button click')
+        $(event.target).text(function(i, text){
+            return text == "View more" ? "View less" : "View more";
         });
         // This toggles the visibility of the 'card-content' element within the same 'event-card'
-        if ($(this).text() === "see less") {
-            $(this).closest('.event-card').find('.card-content').removeClass('hidden');
+        if ($(event.target).text() === "View less") {
+            $(event.target).closest('.event-card').find('.card-content').removeClass('hidden');
         } else {
-            $(this).closest('.event-card').find('.card-content').addClass('hidden');
+            $(event.target).closest('.event-card').find('.card-content').addClass('hidden');
         }
-    });
-});
+})

@@ -1,6 +1,10 @@
 const router = require('express').Router();
 const { Group, GroupUser, User, Event } = require('../../models');
 const withAuth = require('../../utils/auth');
+const aws = require('aws-sdk');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+require('dotenv').config();
 
 //get all uses
 router.get('/', async (req, res) => {
@@ -15,8 +19,7 @@ router.get('/', async (req, res) => {
 //get a user by id, include all groups and events for that user 
 router.get('/:id', async (req, res) => {
     try {
-        const userData = await User.findByPk(req.params.id, {include: 
-            [{model: Group, through: {attributes: []}}, {model: Event, as: 'created_events'}],
+        const userData = await User.findByPk(req.params.id, {
             attributes: {exclude: ['password']}});
         if(!userData) {
             res.status(400).json({message: 'Cannot find user in the database'});
@@ -76,15 +79,18 @@ router.delete('/:id', async (req, res) => {
 
 //user tries login
 router.post('/login', async (req, res) => {
+    console.log({email: req.body.email, password: req.body.password})
     try {
         const userData = await User.findOne({where: {email: req.body.email}});
         if(!userData) {
             res.status(400).json({message: 'Incorrect email or password, please try again!'});
+            console.log('incorrect email')
             return;
         }
         const validPassword = await userData.checkPassword(req.body.password);
         if(!validPassword) {
             res.status(400).json({message: 'Incorrect email or password, please try again!'});
+            console.log('incorrect password')
             return;
         }
 
@@ -108,5 +114,41 @@ router.post('/logout', (req, res) => {
         res.status(404).end();
     }
 })
+
+aws.config.update({
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    region: process.env.AWS_REGION
+});
+
+const s3 = new aws.S3();
+
+const upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.AWS_BUCKET_NAME,
+        acl: 'public-read', // This will make uploaded files publicly readable
+        metadata: function (req, file, cb) {
+            cb(null, {fieldName: file.fieldname});
+        },
+        key: function (req, file, cb) {
+            cb(null, Date.now().toString())
+        }
+    })
+});
+
+    // And update user profile with the image URL
+router.post('/upload', upload.single('profilePic'), async (req, res) => {
+    try {
+        const user = await User.update(
+            { profilePic: req.file.location }, 
+            { where: { id: req.session.user_id } }
+        );
+        res.json({ message: 'Profile picture uploaded successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
 
 module.exports = router;

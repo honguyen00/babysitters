@@ -1,8 +1,8 @@
 <input type="hidden" class="userId" id="userId" value="{{userdetails.id}}"> 
-<div class="container mt-4">
+<div class="container mt-4" id="myEvents">
     <h1>{{userdetails.first_name}} {{userdetails.last_name}}'s Events</h1>
     <h2>Created Events</h2>
-    <div class="d-flex events-container created-event-container">
+    <div class="d-flex events-container created-event-container ">
         {{#if created_events}}
         {{#each created_events as |event|}}
             {{> myEventCard event }}
