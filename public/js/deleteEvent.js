@@ -24,12 +24,8 @@ createdEventsFeed.on('click', '.eventButton', (event) => {
 acceptedEventsFeed.on('click', '.eventButton', (event) => {
     const eventId = event.target.dataset.eventId;
 
-    fetch(`api/events/${eventId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ accepted_by: null, status: 'open'})
+    fetch(`api/events/${eventId}/cancel`, {
+        method: 'POST',
     }).then((response) => {
         if(response.ok) {
             document.location.reload();
@@ -39,17 +35,17 @@ acceptedEventsFeed.on('click', '.eventButton', (event) => {
     })
 });
 
+
 function initializeAnimations() {
-    // Anime.js animations for open and booked buttons
+    // Subtle scale transform for open buttons
     anime({
         targets: '.booked',
-        boxShadow: [
-            { value: '0 0 5px rgba(255, 0, 0, 1)' },
-            { value: '0 0 25px rgba(255, 0, 0, 1)' },
-            { value: '0 0 5px rgba(255, 0, 0, 1)' },
-        ],
-        easing: 'easeInOutSine',
-        duration: 500,
+        scale: [1, 1.05], // Scale from 100% to 105%
+        duration: 2000,
+        easing: 'easeInOutQuad',
+        direction: 'alternate', // Alternate between scaling up and down
         loop: true
     });
 }
+
+

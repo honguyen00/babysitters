@@ -1,6 +1,5 @@
 import errorMessage  from './errorHandler.js';
 
-
 const eventForm = $('#eventForm');
 const handlecreateEvent = async (event) => { 
     event.preventDefault();
@@ -13,6 +12,15 @@ const handlecreateEvent = async (event) => {
     var startdate = new Date(date[0], date[1], date[2], startTime[0], startTime[1]);
     var finishdate = new Date(date[0], date[1], date[2], finishTime[0], finishTime[1]);
     
+    let halfHourIntervals = [];
+    for (let i = 0; i < 24; i++) {
+        for (let j = 0; j < 60; j += 30) {
+            let hour = i < 10 ? '0' + i : i;
+            let minute = j == 0 ? '00' : j;
+            halfHourIntervals.push(`${hour}:${minute}`);
+        }
+    }
+
     if(!title || !description || !date || !startTime || !finishTime) {
         errorMessage(eventForm, 'errorMessage', 'Must input in all field!')
         return
