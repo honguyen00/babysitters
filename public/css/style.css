@@ -337,32 +337,88 @@ ul {
 }
 
 .events-container {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     overflow-x: auto;
 }
 
+/* Card */
 
 .card {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    border-radius: 5px;
-}
-
-.card:hover {
-    border: solid 1px black;
-    box-shadow: 0 16px 16px 0 rgba(15, 15, 15, 0.2);
+    background: #fff; /* White background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin: 20px; /* Space around card */
+    overflow: hidden; /* Ensures no content spills out */
+    border: none; /* Removes border */
 }
 
 .card-body {
-    padding: 5px 16px;
+    padding: 20px; /* Spacing inside the card */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 1rem;
 }
+
+.card-title, .card-text {
+    font-family: 'Roboto', sans-serif; /* Modern font */
+    margin-bottom: 10px;
+}
+
+.card-text {
+    color: #333; /* Dark grey text for better readability */
+    line-height: 1.6; /* More space between lines */
+}
+
+/* Status OPEN should be visually distinct */
+.status-open {
+    color: #4CAF50; /* Material Design Green */
+    font-weight: bold;
+}
+
+/* Status BOOKED should be visually distinct and less prominent */
+.status-booked {
+    color: #F44336; /* Material Design Red */
+    font-weight: bold;
+}
+
+/* Modern looking button */
+.btn {
+    background: linear-gradient(45deg, #FFC107, #FF9800); /* Gradient background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: linear-gradient(45deg, #FF9800, #FFC107); /* Gradient hover effect */
+}
+
+/* Use this class to add icons from a library like FontAwesome */
+.icon {
+    margin-right: 5px;
+}
+
+/* Event Card  */
 
 .event-card {
     border-radius: 5px;
     background-color: rgb(250, 250, 250);
-    flex: 0 0 33.33% ;    
+    flex: 0 0 33.33% ;
+    margin: 10px;   
+}
+
+/* Media Query for Mobile Devices */
+@media only screen and (max-width: 768px) {
+    .event-card {
+        flex: 0 0 100%;
+        width: 100%;
+        margin: 10px;
+    }
+
+    .events-container {
+        flex-wrap: wrap;
+        padding: 10px;
+    }
 }

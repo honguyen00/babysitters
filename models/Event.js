@@ -34,6 +34,10 @@ Event.init(
       type: DataTypes.STRING,
       defaultValue: 'open', // Default status is 'available'
     },
+    duration: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     //Foreign keys
     created_by: {
       type: DataTypes.INTEGER,

@@ -11,25 +11,24 @@ eventFeed.on('click', '.eventButton', (event) => {
 })
 
 function initializeAnimations() {
-    // Anime.js animations for open and booked buttons
+    // Subtle scale transform for open buttons
     anime({
         targets: '.open',
-        boxShadow: ['0 0 10px rgba(100, 152, 255, 1)', '0 0 20px rgba(100, 152, 255, 0.8)', '0 0 10px rgba(100, 152, 255, 1)'], // Adjust these colors and values as needed
-        duration: 500,
+        scale: [1, 1.10], // Scale from 100% to 105%
+        duration: 2000,
         easing: 'easeInOutQuad',
-        loop: true,
+        direction: 'alternate', // Alternate between scaling up and down
+        loop: true
     });
 }
 
 // accepting an available event
 function updateEventStatus(eventId) {
-    // Replace with your API endpoint and request body as necessary
-    fetch(`/api/events/${eventId}`, {
-        method: 'PUT',
+    fetch(`/api/events/${eventId}/accept`, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ status: 'booked', accepted_by: $('#userId').val() })
     })
     .then(response => {
         if(response.ok) {
@@ -41,3 +40,4 @@ function updateEventStatus(eventId) {
     })
     .catch(error => console.error('Error:', error));
 }
+
