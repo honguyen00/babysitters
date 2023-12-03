@@ -9,6 +9,7 @@ const userData = [
         address_line: 'address 1',
         suburb: 'Redfern',
         phone_number: '0407005040',
+        profilePic:'https://babysittersdb.s3.ap-southeast-2.amazonaws.com/Family+1.jpeg',
         points: 10
     },
     {
@@ -19,6 +20,7 @@ const userData = [
         address_line: 'address 2',
         suburb: 'Redfern',
         phone_number: '0407005040',
+        profilePic:'https://babysittersdb.s3.ap-southeast-2.amazonaws.com/Family+1.jpeg',
         points: 20
     },
     {
@@ -29,6 +31,7 @@ const userData = [
         address_line: 'address 3',
         suburb: 'Redfern',
         phone_number: '0407005040',
+        profilePic:'https://babysittersdb.s3.ap-southeast-2.amazonaws.com/Family+1.jpeg',
         points: 0
     },
     {
@@ -39,6 +42,7 @@ const userData = [
         address_line: 'address 4',
         suburb: 'Redfern',
         phone_number: '0407005040',
+        profilePic:'https://babysittersdb.s3.ap-southeast-2.amazonaws.com/Family+1.jpeg',
         points: 5
     },
     {
@@ -49,6 +53,7 @@ const userData = [
         address_line: 'address 5',
         suburb: 'Redfern',
         phone_number: '0407005040',
+        profilePic:'https://babysittersdb.s3.ap-southeast-2.amazonaws.com/Family+1.jpeg',
         points: 5
     },
     {
@@ -59,6 +64,7 @@ const userData = [
         address_line: 'address 6',
         suburb: 'Redfern',
         phone_number: '0407005040',
+        profilePic:'https://babysittersdb.s3.ap-southeast-2.amazonaws.com/Family+1.jpeg',
         points: 0
     },
 ]

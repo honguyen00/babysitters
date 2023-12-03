@@ -1,6 +1,10 @@
 const router = require('express').Router();
 const { Group, GroupUser, User, Event } = require('../../models');
 const withAuth = require('../../utils/auth');
+const aws = require('aws-sdk');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+require('dotenv').config();
 
 //get all uses
 router.get('/', async (req, res) => {
@@ -108,5 +112,41 @@ router.post('/logout', (req, res) => {
         res.status(404).end();
     }
 })
+
+aws.config.update({
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    region: process.env.AWS_REGION
+});
+
+const s3 = new aws.S3();
+
+const upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.AWS_BUCKET_NAME,
+        acl: 'public-read', // This will make uploaded files publicly readable
+        metadata: function (req, file, cb) {
+            cb(null, {fieldName: file.fieldname});
+        },
+        key: function (req, file, cb) {
+            cb(null, Date.now().toString())
+        }
+    })
+});
+
+    // And update user profile with the image URL
+router.post('/upload', upload.single('profilePic'), async (req, res) => {
+    try {
+        const user = await User.update(
+            { profilePic: req.file.location }, 
+            { where: { id: req.session.user_id } }
+        );
+        res.json({ message: 'Profile picture uploaded successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
 
 module.exports = router;

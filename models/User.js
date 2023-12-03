@@ -48,6 +48,10 @@ User.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        profilePic: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
         points: {
             type: DataTypes.INTEGER,
             allowNull: false,
