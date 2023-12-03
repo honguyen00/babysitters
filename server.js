@@ -6,6 +6,8 @@ const routes = require('./controllers');
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
+const moment = require('moment');
+
 // handlebars dependencies
 const exphbs = require('express-handlebars');
 const path = require('path');
@@ -14,6 +16,9 @@ const hbs = exphbs.create({
   helpers: {
     is_eq: function(value1, value2) {
       return value1 == value2;
+    },
+    formatDate: function(date) {
+      return moment(date).format('DD MMM'); // Formats the date to "22 MAR"
     }
   }
 });

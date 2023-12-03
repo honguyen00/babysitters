@@ -1,22 +1,25 @@
 <!-- partials/eventCard.handlebars -->
-
 <div class="card event-card">
-    <div class="card-body">
-        <div>
-        <h5 class="card-title"><strong>Host: </strong>{{this.created_user.first_name}} {{this.created_user.last_name}}</h5>
-        <p class="card-text"><strong>Title: </strong>{{title}}</p>
-        <p class="card-text"><strong>Description: </strong>{{description}}</p>
-        <p class="card-text"><strong>Date: </strong>{{date}}</p>
-        <p class="card-text"><strong>Time: </strong>{{start_time}} - {{finish_time}}</p>
-        <p class="card-text"><strong>Location: </strong>{{this.created_user.suburb}}</p>
-        <p class="card-text"><strong>Contact: </strong> {{this.created_user.phone_number}}</p>
-        <p class="card-text"><strong>Points: </strong> {{duration}}</p>
-        <p class="card-text"><strong>Status: </strong><strong style="color: green">{{#if this.accepted_by}}BOOKED{{else}}OPEN{{/if}}</strong></p>
+    <div class="card-header">
+        <div class="date-box">
+            {{formatDate date}} <!-- Make sure you have a helper to format the date -->
         </div>
-        <button id="eventButton-{{this.id}}"
-                data-event-id="{{this.id}}"
-                class="btn btn-primary mx-auto open eventButton">
-                ACCEPT 
-        </button>
+        <img src={{profile_picture}} alt="Profile Picture" class="card-img-top">
+        <div class="title-overlay">
+            <h5 class="card-title">{{title}}</h5>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="card-content hidden"> <!-- Initially hidden content -->
+            <p class="card-text"><strong>Time:</strong> {{start_time}} - {{finish_time}}</p>
+            <p class="card-text"><strong>Location:</strong> {{this.created_user.suburb}}</p>
+            <p class="card-text"><strong>Contact:</strong> {{this.created_user.phone_number}}</p>
+            <p class="card-text"><strong>Points:</strong> {{duration}}</p>
+            <p class="card-text"><strong>Status:</strong> <span class="status {{#if this.accepted_by}}booked{{else}}open{{/if}}">{{#if this.accepted_by}}BOOKED{{else}}OPEN{{/if}}</span></p>
+        </div>
+        <button class="btn btn-secondary more-btn more-btn-style">See more details</button>
+        <button id="eventButton-{{this.id}}" data-event-id="{{this.id}}" class="btn btn-primary eventButton">
+            ACCEPT 
+        </button> 
     </div>
 </div>

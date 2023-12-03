@@ -93,9 +93,6 @@ body{
     margin-top:20px;
 }
 
-.align-center {
-    text-align: center;
-}
 .hash-list {
     display: block;
     padding: 0;
@@ -357,6 +354,7 @@ ul {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: auto;
 }
 
 .card-title, .card-text {
@@ -402,23 +400,145 @@ ul {
 
 /* Event Card  */
 
-.event-card {
+.card.event-card {
+    position: relative;
     border-radius: 5px;
     background-color: rgb(250, 250, 250);
     flex: 0 0 33.33% ;
-    margin: 10px;   
+    margin: 10px;  
+    overflow: hidden; /* This ensures that all content is clipped to the card's corners */
+}
+
+.events-container {
+    align-items: flex-start;
 }
 
 /* Media Query for Mobile Devices */
 @media only screen and (max-width: 768px) {
     .event-card {
         flex: 0 0 100%;
-        width: 100%;
-        margin: 10px;
     }
 
     .events-container {
         flex-wrap: wrap;
         padding: 10px;
     }
+}
+
+.card-img-top {
+    display: block;
+    width: 100%; /* Adjust as needed */
+    height: auto; /* Adjust for aspect ratio */
+}
+
+.date-box {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    left: 10px; /* Adjust as needed */
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px;
+    z-index: 10; /* Make sure this is above the image */
+}
+
+.title-overlay {
+    position: absolute;
+    bottom: 0; /* Aligns to the bottom of the card */
+    left: 0;
+    width: 100%; /* Ensures the overlay covers the entire width of the card */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    color: white;
+    padding: 5px; /* Adds some padding inside the overlay */
+    z-index: 10; /* Make sure this is above the image */
+    text-align: center;
+}
+
+/* You may want to add a style for .more-btn to control its appearance and positioning */
+.more-btn {
+    /* Additional styling */
+    cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+}
+
+/* Ensure that the description shows when .show-description class is added by JS */
+.show-description {
+    display: block;
+}
+
+.description {
+    display: none;
+    /* More styling as needed */
+}
+
+.more-btn {
+    /* Style as needed */
+}
+
+.hidden {
+    display: none;
+}
+
+.card.event-card {
+    position: relative;
+    border-radius: 5px;
+    background-color: rgb(250, 250, 250);
+    margin: 10px;   
+    overflow: hidden; /* This ensures the date box and title overlay don't overflow the card */
+}
+
+.card-header {
+    position: relative; /* For absolute positioning of children */
+}
+
+.date-box {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px;
+    z-index: 2;
+}
+
+.card-img-top {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.title-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px;
+    z-index: 2;
+    text-align: center;
+}
+
+.card-content.hidden {
+    display: none;
+}
+
+
+.more-btn-style {
+    background-color: white;
+    color: black;
+    margin: 20px;
+}
+
+.more-btn {
+    cursor: pointer;
+    background: linear-gradient(45deg, white, white); /* Gradient background */
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.more-btn:hover {
+    background: linear-gradient(45deg, white, white); /* Gradient hover effect */
+    color: black;
 }
