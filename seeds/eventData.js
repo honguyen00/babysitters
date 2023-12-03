@@ -82,9 +82,10 @@ const eventData = [
         description: 'test event 3 description',
         status: 'available',
         created_by: 5,
+        accepted_by: 2
     }, 
     {
-        title: 'test event 9',
+        title: 'test event 10',
         date: '2023-11-29',
         start_time: '19:00',
         finish_time: '21:00',
@@ -92,6 +93,37 @@ const eventData = [
         description: 'test event 3 description',
         status: 'available',
         created_by: 5,
+        accepted_by: 2
+    }, 
+    {
+        title: 'test event 11',
+        date: '2023-11-29',
+        start_time: '19:00',
+        finish_time: '21:00',
+        duration: 2,
+        description: 'test event 3 description',
+        status: 'available',
+        created_by: 2,
+    }, 
+    {
+        title: 'test event 12',
+        date: '2023-11-29',
+        start_time: '19:00',
+        finish_time: '21:00',
+        duration: 2,
+        description: 'test event 3 description',
+        status: 'available',
+        created_by: 2,
+    }, 
+    {
+        title: 'test event 13',
+        date: '2023-11-29',
+        start_time: '19:00',
+        finish_time: '21:00',
+        duration: 2,
+        description: 'test event 3 description',
+        status: 'available',
+        created_by: 2,
     }, 
 ];
 

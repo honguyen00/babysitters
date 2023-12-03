@@ -48,7 +48,7 @@ User.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        profile_picture: {
+        profilePic: {
             type: DataTypes.STRING,
             allowNull: true,
         },
@@ -64,10 +64,10 @@ User.init(
                 newUserData.password = await bcrypt.hash(newUserData.password, 10);
                 return newUserData;
             },
-            beforeUpdate: async (updatedUserData) => {
-                updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
-                return updatedUserData;
-            },
+            // beforeUpdate: async (updatedUserData) => {
+            //     updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+            //     return updatedUserData;
+            // },
         },
         sequelize,
         timestamps: false,

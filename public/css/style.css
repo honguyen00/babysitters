@@ -336,6 +336,9 @@ ul {
 .events-container {
     flex-wrap: wrap;
     overflow-x: auto;
+    align-items: stretch;
+    gap: 15px;
+    justify-content: center;
 }
 
 /* Card */
@@ -344,7 +347,7 @@ ul {
     background: #fff; /* White background */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    margin: 20px; /* Space around card */
+    /* margin: 20px; Space around card */
     overflow: hidden; /* Ensures no content spills out */
     border: none; /* Removes border */
 }
@@ -391,6 +394,7 @@ ul {
 
 .btn:hover {
     background: linear-gradient(45deg, #FF9800, #FFC107); /* Gradient hover effect */
+    color: black;
 }
 
 /* Use this class to add icons from a library like FontAwesome */
@@ -404,24 +408,20 @@ ul {
     position: relative;
     border-radius: 5px;
     background-color: rgb(250, 250, 250);
-    flex: 0 0 33.33% ;
-    margin: 10px;  
+    flex: 0 0 40% ;
+    /* margin: 10px;   */
     overflow: hidden; /* This ensures that all content is clipped to the card's corners */
-}
-
-.events-container {
-    align-items: flex-start;
 }
 
 /* Media Query for Mobile Devices */
 @media only screen and (max-width: 768px) {
     .event-card {
-        flex: 0 0 100%;
+        flex: 0 0 100% !important;
     }
 
     .events-container {
         flex-wrap: wrap;
-        padding: 10px;
+        /* padding: 10px; */
     }
 }
 
@@ -469,20 +469,8 @@ ul {
     /* More styling as needed */
 }
 
-.more-btn {
-    /* Style as needed */
-}
-
 .hidden {
     display: none;
-}
-
-.card.event-card {
-    position: relative;
-    border-radius: 5px;
-    background-color: rgb(250, 250, 250);
-    margin: 10px;   
-    overflow: hidden; /* This ensures the date box and title overlay don't overflow the card */
 }
 
 .card-header {
@@ -541,4 +529,61 @@ ul {
 .more-btn:hover {
     background: linear-gradient(45deg, white, white); /* Gradient hover effect */
     color: black;
+}
+
+/* blur effect */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7); /* Adjust the alpha value for the desired blur intensity */
+    backdrop-filter: blur(5px); /* Adjust the blur radius as needed */
+    display: none;
+    z-index: 1;
+}
+
+/* Profile link */
+.profile-link:hover {
+    cursor: grab;
+    text-decoration: underline !important;
+}
+
+/* profile open on click */
+.profile-card {
+    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    display: block;
+    z-index: 1; /* Ensures the card is on top of the overlay */
+}
+
+/* Cancel button color */
+.booked {
+    background: linear-gradient(45deg, #f37575, #a70707);
+}
+
+.booked:hover {
+    background: linear-gradient(45deg, #a70707, #f37575);
+}
+
+/* user who book events */
+.booked-user {
+    color: #007bff !important;
+}
+
+.booked-user:hover {
+    cursor: pointer;
+    text-decoration: underline !important;
+}
+
+.fa-trash:hover {
+    cursor: pointer;
 }

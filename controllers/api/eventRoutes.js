@@ -79,7 +79,10 @@ router.post('/:id/accept', async (req, res) => {
       user.points += event.duration;
 
       // Save the updated user data
+      // comment this out because of the bug, i think when user.save() is called, it also trigger beforeupdate
       await user.save();
+
+      console.log(user.get({plain: true}));
 
       // Update the event status as booked and set the accepted_by field
       const updatedEvent = await Event.update({ status: 'booked', accepted_by: req.session.user_id }, { where: { id: eventId } });

@@ -8,10 +8,10 @@
         <p class="card-text"><strong>Location: </strong>{{this.created_user.suburb}}</p>
         <p class="card-text"><strong>Contact: </strong>{{this.created_user.phone_number}}</p>
         <p class="card-text"><strong>Points: </strong> {{duration}}</p>
-        <p class="card-text"><strong>Status: </strong>{{#if this.accepted_by}}<strong style="color: RED">BOOKED by <a class="booked-user" data-user-id={{accepted_user.id}}>{{accepted_user.first_name}}</a></strong>{{else}}<strong style="color: GREEN">OPEN</strong>{{/if}}</p>
-        <button id="eventButton"
+        <p class="card-text"><strong>Status: </strong>{{#if this.accepted_by}}<strong style="color: RED">BOOKED by <a class="booked-user profile-link" data-user-id={{accepted_user.id}}>{{accepted_user.first_name}}</a></strong>{{else}}<strong style="color: GREEN">OPEN</strong>{{/if}}</p>
+        <button
                 data-event-id="{{this.id}}" 
-                class="btn btn-danger mx-auto booked eventButton">
+                class="btn btn-danger mx-auto booked eventButton cancel-button">
                 CANCEL 
         </button>
     </div>

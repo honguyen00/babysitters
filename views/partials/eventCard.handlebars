@@ -15,10 +15,10 @@
             <p class="card-text"><strong>Location:</strong> {{this.created_user.suburb}}</p>
             <p class="card-text"><strong>Contact:</strong> {{this.created_user.phone_number}}</p>
             <p class="card-text"><strong>Points:</strong> {{duration}}</p>
-            <p class="card-text"><strong>Status:</strong> <span class="status {{#if this.accepted_by}}booked{{else}}open{{/if}}">{{#if this.accepted_by}}BOOKED{{else}}OPEN{{/if}}</span></p>
+            <p class="card-text"><strong>Status:</strong> <span class="status-{{#if this.accepted_by}}booked{{else}}open{{/if}}">{{#if this.accepted_by}}BOOKED{{else}}OPEN{{/if}}</span></p>
         </div>
-        <button class="btn btn-secondary more-btn more-btn-style">See more details</button>
-        <button id="eventButton-{{this.id}}" data-event-id="{{this.id}}" class="btn btn-primary eventButton">
+        <button class="btn btn-secondary more-btn more-btn-style">View more</button>
+        <button data-event-id="{{this.id}}" class="btn btn-primary eventButton open accept-button">
             ACCEPT 
         </button> 
     </div>
