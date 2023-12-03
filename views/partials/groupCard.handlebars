@@ -1,0 +1,14 @@
+{{#each groups as |group|}}
+<div class="col-md-4">
+    <div class="card" style="background-color: #FFBE74;">
+        <div class="card-body">
+        <div class="card-header">
+            <h5 class="card-title" id="name">{{group.name}}</h5>
+        </div>
+        <p>Number of members: {{group.count}}</p>
+        </div>
+    </div>
+</div>
+{{/each}}
+{{!-- {{log this}} --}}
+<input type="hidden" id="userId" value={{user_id}}>

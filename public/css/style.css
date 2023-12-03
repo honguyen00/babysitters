@@ -469,10 +469,6 @@ ul {
     /* More styling as needed */
 }
 
-.more-btn {
-    /* Style as needed */
-}
-
 .hidden {
     display: none;
 }
@@ -545,6 +541,7 @@ ul {
     background: rgba(0, 0, 0, 0.7); /* Adjust the alpha value for the desired blur intensity */
     backdrop-filter: blur(5px); /* Adjust the blur radius as needed */
     display: none;
+    z-index: 1;
 }
 
 /* Profile link */
@@ -585,4 +582,8 @@ ul {
 .booked-user:hover {
     cursor: pointer;
     text-decoration: underline !important;
+}
+
+.fa-trash:hover {
+    cursor: pointer;
 }

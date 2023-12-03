@@ -9,7 +9,21 @@ router.post('/', async (req, res) => {
             ...req.body}}
         ));
         if(created) {
-            res.status(200).json({data: groupuserData, message: 'Add user to group successfully!'})
+            res.status(200).json(groupuserData.get({plain: true}))
+            return
+        } else {
+            res.status(403).json({message: 'User is already in this group'})
+        }
+    } catch (error) {
+        res.status(400).json(error);
+    }
+});
+
+router.post('/bulkcreate', async (req, res) => {
+    try {
+        const data = GroupUser.bulkCreate(req.body);
+        if(data) {
+            res.status(200).json(data.get({plain: true}))
             return
         } else {
             res.status(403).json({message: 'User is already in this group'})
@@ -34,3 +48,5 @@ router.delete('/', async (req, res) => {
         res.status(500).json(error);
     }
 })
+
+module.exports = router;

@@ -31,6 +31,21 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+//get a user by email, include all groups and events for that user 
+router.get('/email/:email', async (req, res) => {
+    try {
+        const userData = await User.findOne({where: {email: req.params.email},
+            attributes: {exclude: ['password']}});
+        if(!userData) {
+            res.status(400).json({message: 'Cannot find user in the database'});
+            return;
+        }
+        res.status(200).json(userData);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
 
 //create a new user
 router.post('/', async (req, res) => {

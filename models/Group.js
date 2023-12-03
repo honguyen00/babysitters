@@ -17,7 +17,7 @@ Group.init({
         },
         number_of_users: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             defaultValue: 0,
         },
         creator_id: {

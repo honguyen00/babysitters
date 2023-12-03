@@ -20,17 +20,21 @@ router.get('/', async (req, res) => {
 
 // create a new group
 router.post('/', async (req, res) => {
+    console.log({...req.body, creator_id: req.session.user_id})
     try {
-        const groupData = await Group.create(req.body);
+        const groupData = await Group.create({name: req.body.name, number_of_users: 1, creator_id: req.session.user_id});
         //after create new group, add creator as member of new group
         const groupuserData = await GroupUser.create({
             group_id: groupData.id,
             user_id: req.session.user_id
         })
-        res.status(200).json({data: groupData, message: 'Create new group successfully'},
-        {data: groupuserData, message: 'Creator has been added to new group successfully'});
+        if(groupData) {
+            res.status(200).json(groupData);
+        } else {
+            res.status(400).json({message: 'Cannot create group'})
+        }
     } catch (error) {
-        res.status(400).json(error);
+        res.status(500).json(error);
     }
 });
 

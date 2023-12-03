@@ -58,7 +58,6 @@ function updateEventStatus(eventId) {
 
 $('.more-btn').on('click', (event) => {
     //This changes the button text from "see more details" to "see less" and vice versa
-    console.log('more button click')
         $(event.target).text(function(i, text){
             return text == "View more" ? "View less" : "View more";
         });

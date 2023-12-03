@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { User, Group, GroupUser, Event } = require('../../models');
 const withAuth = require('../../utils/auth');
+const sequelize = require('../../config/connection');
 
 //getting homepage (need more coding in handlebars for homepage when not logged in and when logged in)
 router.get('/', async (req, res) => {
@@ -34,7 +35,7 @@ router.get('/profile', withAuth, async (req,res) => {
 });
 
 // get user events both created and accepted
-router.get('/my-events', async (req, res) => {
+router.get('/my-events', withAuth,async (req, res) => {
     try {
         const userData = await User.findByPk(req.session.user_id, {attributes: {exclude: ['password']}});
 
@@ -81,7 +82,7 @@ router.get('/create-event', withAuth, async (req,res) => {
 });
 
 // get all events in the joined groups
-router.get('/home', async (req,res) => {
+router.get('/home', withAuth, async (req,res) => {
     try {
         const groups = await GroupUser.findAll({where: {
             user_id: req.session.user_id
@@ -136,10 +137,23 @@ router.get('/home', async (req,res) => {
     }
 });
 
-router.get('/create-group', withAuth, (req, res) => {
+router.get('/create-group', withAuth, async (req, res) => {
+    const userData = await User.findByPk(req.session.user_id, {attributes: {exclude: ['password']}})
+    const groupData = await User.findByPk(req.session.user_id, {include: [{model: Group, through: {GroupUser}, attributes: ['id', 'name', 'creator_id']}], attributes: {exclude: ['password']}})
+    const groups = groupData.get({ plain: true });
+    var Data = []
+    groups.groups.forEach(async (element) => {
+        var [[groupMem], data] = await sequelize.query(`SELECT COUNT(*) as member_count FROM groupuser where group_id = ${element.id}`);
+        element = {...element, count: groupMem.member_count};
+        Data.push(element);
+        // console.log(Data);
+    });
+    
     res.render('createGroup', {
         user_id: req.session.user_id,
         logged_in: true,
+        groups: Data,
+        userdetails: userData.get({ plain: true })
     })
 })
 
