@@ -2,7 +2,7 @@ const {Event} = require('../models');
 
 const eventData = [
     {
-        title: 'test event 1',
+        title: 'Date night for Mum and Dad!',
         date: '2023-11-23',
         start_time: '6:00',
         finish_time: '8:00',
@@ -13,7 +13,7 @@ const eventData = [
         accepted_by: 2
     }, 
     {
-        title: 'test event 2',
+        title: 'Movie night, anyone help!?',
         date: '2023-11-30',
         start_time: '15:00',
         finish_time: '18:00',
@@ -23,7 +23,7 @@ const eventData = [
         created_by: 1,
     }, 
     {
-        title: 'test event 3',
+        title: 'Friday night in? Sleepy kids!',
         date: '2023-11-29',
         start_time: '19:00',
         finish_time: '21:00',
@@ -33,7 +33,7 @@ const eventData = [
         created_by: 2,
     }, 
     {
-        title: 'test event 4',
+        title: 'Please help! Last minute event!',
         date: '2023-11-23',
         start_time: '6:00',
         finish_time: '8:00',
@@ -44,7 +44,7 @@ const eventData = [
         accepted_by: 2,
     }, 
     {
-        title: 'test event 5',
+        title: 'Work function, anyone free?',
         date: '2023-11-29',
         start_time: '19:00',
         finish_time: '23:00',
@@ -54,7 +54,7 @@ const eventData = [
         created_by: 2,
     }, 
     {
-        title: 'test event 6',
+        title: 'Birthday dinner, free pizza!',
         date: '2023-11-29',
         start_time: '19:00',
         finish_time: '21:00',
@@ -64,7 +64,7 @@ const eventData = [
         created_by: 5,
     }, 
     {
-        title: 'test event 7',
+        title: 'Anyone free Saturday?',
         date: '2023-11-29',
         start_time: '19:00',
         finish_time: '21:00',
@@ -74,7 +74,7 @@ const eventData = [
         created_by: 5,
     }, 
     {
-        title: 'test event 8',
+        title: 'Quick dinner date :)',
         date: '2023-11-29',
         start_time: '19:00',
         finish_time: '21:00',
@@ -85,7 +85,7 @@ const eventData = [
         accepted_by: 2
     }, 
     {
-        title: 'test event 10',
+        title: 'Quick local dinner, we have Netflix :)',
         date: '2023-11-29',
         start_time: '19:00',
         finish_time: '21:00',
@@ -96,7 +96,7 @@ const eventData = [
         accepted_by: 2
     }, 
     {
-        title: 'test event 11',
+        title: 'House inspection, anyone free to mind Carl?',
         date: '2023-11-29',
         start_time: '19:00',
         finish_time: '21:00',
@@ -106,7 +106,7 @@ const eventData = [
         created_by: 2,
     }, 
     {
-        title: 'test event 12',
+        title: 'Going to Theatre, anyone free?',
         date: '2023-11-29',
         start_time: '19:00',
         finish_time: '21:00',
@@ -116,7 +116,7 @@ const eventData = [
         created_by: 2,
     }, 
     {
-        title: 'test event 13',
+        title: 'Wedding anniversary, anyone free?',
         date: '2023-11-29',
         start_time: '19:00',
         finish_time: '21:00',

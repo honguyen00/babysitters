@@ -427,9 +427,19 @@ ul {
 
 .card-img-top {
     display: block;
-    width: 100%; /* Adjust as needed */
-    height: auto; /* Adjust for aspect ratio */
+    width: 350px; /* Set a fixed width for the square */
+    height: 350px; /* Set the height equal to the width to make it a square */
+    object-fit: cover; /* This will make sure the image covers the square area */
+    object-position: center; /* This will center the image within the square frame */
 }
+
+.card-header {
+    display: flex;
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    /* Set a specific height if you want or leave as is to adjust according to content */
+}
+
 
 .date-box {
     position: absolute;
@@ -485,12 +495,6 @@ ul {
     color: white;
     padding: 5px;
     z-index: 2;
-}
-
-.card-img-top {
-    width: 100%;
-    height: auto;
-    display: block;
 }
 
 .title-overlay {
