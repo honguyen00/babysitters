@@ -11,6 +11,15 @@ const handlecreateEvent = async (event) => {
     var finishTime = ($('#endTime').val()).split(':');
     var startdate = new Date(date[0], date[1], date[2], startTime[0], startTime[1]);
     var finishdate = new Date(date[0], date[1], date[2], finishTime[0], finishTime[1]);
+    var duration = finishTime[0] - startTime[0]
+    if(finishTime[1] < startTime[1]) {
+        duration -= 0.5;
+    } else {
+        duration += 0.5;
+    }
+
+
+    console.log(duration);
     
     let halfHourIntervals = [];
     for (let i = 0; i < 24; i++) {
@@ -40,6 +49,7 @@ const handlecreateEvent = async (event) => {
                 finish_time: $('#endTime').val(), 
                 description: description,
                 status: 'available',
+                duration: duration
             }),
             headers: { 'Content-Type': 'application/json' }
         });
