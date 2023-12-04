@@ -153,17 +153,17 @@ router.post('/logout', (req, res) => {
 // });
 
     // And update user profile with the image URL
-router.post('/upload', upload.single('profilePic'), async (req, res) => {
-    try {
-        const user = await User.update(
-            { profilePic: req.file.location }, 
-            { where: { id: req.session.user_id } }
-        );
-        res.json({ message: 'Profile picture uploaded successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error', error: error.message });
-    }
-});
+// router.post('/upload', upload.single('profilePic'), async (req, res) => {
+//     try {
+//         const user = await User.update(
+//             { profilePic: req.file.location }, 
+//             { where: { id: req.session.user_id } }
+//         );
+//         res.json({ message: 'Profile picture uploaded successfully' });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Server error', error: error.message });
+//     }
+// });
 
 module.exports = router;
