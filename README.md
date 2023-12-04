@@ -13,6 +13,8 @@
 ## Description
 Babysitters Club is a community-driven platform designed to facilitate a trusted and secure environment for parents to exchange babysitting services. Utilizing a point-based system, it enables parents to manage and schedule babysitting events, create and join private groups, and earn points that can be spent on receiving services in return.
 
+Please check us out in our live website: https://babysitters-app-7fe0f50cf2a3.herokuapp.com/
+
 ## Key Features
 - **User Authentication**: Securely register and log in to access personal accounts.
 - **Group Creation**: Create private groups for trusted exchanges.
