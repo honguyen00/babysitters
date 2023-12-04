@@ -121,7 +121,7 @@ function saveForm() {
         body: JSON.stringify({first_name: firstname, last_name: lastname, address_line: addressline, suburb: suburb, phone_number:phonenumber}),
     })
     .then(response => {if(response.ok) {
-        // document.location.reload();
+        document.location.reload();
 
     } else {
         window.alert('failed to update')
