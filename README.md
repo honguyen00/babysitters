@@ -39,7 +39,7 @@ To get a local copy up and running, follow these simple steps.
 ### Installation Steps
 1. Clone the repository
 ``sh 
-git clone https://github.com/your_username_/Project-Name.git
+git clone git@github.com:honguyen00/babysitters.git
 2. Navigate to the project directory
 ``sh
 cd Project-Name
