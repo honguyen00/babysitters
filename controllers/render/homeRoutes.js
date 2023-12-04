@@ -142,12 +142,13 @@ router.get('/create-group', withAuth, async (req, res) => {
     const groupData = await User.findByPk(req.session.user_id, {include: [{model: Group, through: {GroupUser}, attributes: ['id', 'name', 'creator_id']}], attributes: {exclude: ['password']}})
     const groups = groupData.get({ plain: true });
     var Data = []
-    groups.groups.forEach(async (element) => {
-        var [[groupMem], data] = await sequelize.query(`SELECT COUNT(*) as member_count FROM groupuser where group_id = ${element.id}`);
-        element = {...element, count: groupMem.member_count};
-        Data.push(element);
+
+    for(let i = 0; i < groups.groups.length; i++) {
+        var [[groupMem], data] = await sequelize.query(`SELECT COUNT(*) as member_count FROM groupuser where group_id = ${groups.groups[i].id}`);
+        groups.groups[i] = {...groups.groups[i], count: groupMem.member_count};
+        Data.push(groups.groups[i]);
         // console.log(Data);
-    });
+    }
     
     res.render('createGroup', {
         user_id: req.session.user_id,
