@@ -99,3 +99,4 @@ registerForm.on('submit', async (event) => {
         }
     }
 });
+

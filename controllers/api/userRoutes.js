@@ -80,6 +80,21 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+// Update information for an existing user by email
+router.put('/email/:email', async (req, res) => {
+    console.log('accessroute');
+    try {
+        const userData = await User.update(req.body, {
+            where: {
+                email: req.params.email
+            }
+        });
+        res.status(200).json({ user: userData, message: 'Update user info successfully' });
+    } catch (error) {
+        res.status(400).json(error);
+    }
+});
+
 //deleting existing user
 router.delete('/:id', async (req, res) => {
     try {
