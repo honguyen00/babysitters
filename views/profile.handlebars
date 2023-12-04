@@ -3,7 +3,7 @@
     <div class="row">
         <!-- Profile Picture and Points -->
         <div class="col-md-4">
-            <img src="{{profilePic}}" alt="{{first_name}}'s Profile Picture" class="img-fluid">
+            <img src={{profilePic}} alt="{{first_name}}'s Profile Picture" class="img-fluid">
             <h3>Points: {{points}}</h3>
             <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
                 <div class="form-group">
