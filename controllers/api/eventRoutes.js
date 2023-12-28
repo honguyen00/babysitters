@@ -5,7 +5,7 @@ const { Group, GroupUser, User, Event } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // GET all events
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
     try {
       const eventData = await Event.findAll();
       res.status(200).json(eventData);
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET a specific event by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', withAuth, async (req, res) => {
     try {
       const eventId = req.params.id;
       const eventData = await Event.findByPk(eventId);
@@ -40,7 +40,7 @@ router.post('/', withAuth, async (req, res) => {
 });
 
 // PUT/update an event by ID
-router.put('/:id', async (req, res) => {
+router.put('/:id', withAuth, async (req, res) => {
     try {
       const eventId = req.params.id;
       const updatedEvent = await Event.update(req.body, { where: { id: eventId } });
@@ -51,7 +51,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE an event by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
     try {
       const eventId = req.params.id;
       const deletedEvent = await Event.destroy({ where: { id: eventId } });
@@ -62,7 +62,7 @@ router.delete('/:id', async (req, res) => {
   });
 
 // Handle the POST request for accepting an event
-router.post('/:id/accept', async (req, res) => {
+router.post('/:id/accept', withAuth, async (req, res) => {
   try {
       const eventId = req.params.id;
       const event = await Event.findByPk(eventId);
@@ -93,7 +93,7 @@ router.post('/:id/accept', async (req, res) => {
   }
 });
 
-router.post('/:id/cancel', async (req, res) => {
+router.post('/:id/cancel', withAuth, async (req, res) => {
   try {
       const eventId = req.params.id;
       const event = await Event.findByPk(eventId);
