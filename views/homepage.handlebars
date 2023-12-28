@@ -1,19 +1,13 @@
 {{!-- Section Who are we --}}
 <section class="container">
   {{!-- aboutusContainer contains an introduction about the website --}}
-  <div class="row align-items-end" id="aboutusContainer">
+  <div class="row align-items-center" id="aboutusContainer">
     <div class="col-12 col-md-6" id="containertextAbout">
-      <h1 id="title">BabySitters</h1>
+      <h1 id="title">BabySitters App</h1>
       <h2 style="text-align: center">Who are we?</h2>
       <p style="text-align: justify">     
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, reprehenderit! Placeat quo
-      necessitatibus porro corporis quasi architecto sit aspernatur inventore, perspiciatis nulla hic soluta ipsum
-      ipsa sed iure dolorum! Tenetur? Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex voluptatem
-      dolorum earum esse recusandae facere aliquam. Excepturi facilis sint nesciunt ipsa, eveniet facere in quidem
-      voluptas exercitationem distinctio commodi laborum!</p>
-      <div class="text-center">
-        <button id="getStarter" type="button" class="btn btn-danger">Read more!</button>
-      </div>
+        We are a group of like-minded individuals who want to reduce the stress of being parents and want to give them time to spend more on themselves and to relax knowing that their babies are well taken care of!
+      </p>
     </div>
     <div class="col-12 col-md-6" >
       <img class="img-fluid" src="assets/images/kids.jpg" alt="img-about-us" id="photoKids">
@@ -24,13 +18,10 @@
     <div  id="text" >
       <h2 style="text-align: center">Quick guide</h1>
       <p style="text-align: justify">     
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, reprehenderit! Placeat quo
-      necessitatibus porro corporis quasi architecto sit aspernatur inventore, perspiciatis nulla hic soluta ipsum
-      ipsa sed iure dolorum! Tenetur? Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex voluptatem
-      dolorum earum esse recusandae facere aliquam. Excepturi facilis sint nesciunt ipsa, eveniet facere in quidem
-      voluptas exercitationem distinctio commodi laborum!</p>
+      Once you are registerd or login, you can create your own groups of acquantances or family members that you trust your babies. Remember to add them by their email address (they need to have made their own accounts already) when you create your groups.
+      After that, you can view and post events only for your joined or created groups so that only those people can view and interact with your posts.</p>
       <div class="text-center">
-        <button id="getStarter" type="button" class="btn btn-danger">Read more!</button>
+        <button onclick="renderLogin()" id="getStarter" type="button" class="btn btn-danger">Get Started!</button>
       </div>
     </div>
   </div>  
@@ -265,4 +256,8 @@
   </div>
 </footer>
 
-
+<script>
+function renderLogin() {
+  document.location.replace('/login');
+}
+</script>

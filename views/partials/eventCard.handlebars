@@ -4,7 +4,7 @@
         <div class="date-box">
             {{formatDate date}} <!-- Make sure you have a helper to format the date -->
         </div>
-        <img src={{this.created_user.profilePic}} alt="Profile Picture" class="card-img-top">
+        <img src={{#if this.created_user.profilePic}}{{this.created_user.profilePic}}{{else}}''{{/if}} alt="Profile Picture" class="card-img-top">
         <div class="title-overlay">
             <h5 class="card-title">{{title}}</h5>
         </div>
