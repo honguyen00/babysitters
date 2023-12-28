@@ -1,32 +1,3 @@
-// document.addEventListener('DOMContentLoaded', function () {
-//     // const uploadForm = document.getElementById('upload-form');
-
-//     // uploadForm.addEventListener('submit', function (e) {
-//     //     e.preventDefault();
-
-//     //     const formData = new FormData();
-//     //     const profilePic = document.getElementById('profilePic').files[0];
-//     //     formData.append('profilePic', profilePic);
-
-//     //     fetch('/api/users/upload', {
-//     //         method: 'POST',
-//     //         body: formData
-//     //     })
-//     //     .then(response => response.json())
-//     //     .then(data => {
-//     //         if(data.message) {
-//     //             // Handle success
-//     //             console.log('Upload successful');
-//     //             // Optionally, update profile picture on the page
-//     //             document.getElementById('profilePic').src = data.profilePic;
-//     //         }
-//     //     })
-//     //     .catch(error => {
-//     //         console.error('Error:', error);
-//     //     });
-//     // })
-// })
-
 let form;
 let saveButton;
 let editButton;
@@ -85,9 +56,9 @@ function enableForm() {
             }
         }
         // Show the Save button, hide the Edit button, and show the Clear button
-        saveButton.style.display = 'block';
+        saveButton.style.display = 'inline-block';
         editButton.style.display = 'none';
-        clearButton.style.display = 'block';
+        clearButton.style.display = 'inline-block';
     } catch (error) {
         console.error('Error in enableForm:', error);
     }
@@ -96,15 +67,6 @@ function enableForm() {
 
 // Save the form data
 function saveForm() {
-    // const formData = new FormData(form);
-    // // Log all form data to console before making the API call
-    // console.log('Form data:', Object.fromEntries(formData));
-    // console.log('User email:', userEmail);
-    // var firstname = document.getElementById('first_name').innerText;
-    // var lastname = document.getElementById('last_name').innerText;
-    // var addressline = document.getElementById('address_line').innerText;
-    // var suburb = document.getElementById('suburb').innerText;
-    // var phonenumber = document.getElementById('phone_number').innerText;
     var firstname = $('#first_name').val();
     var lastname = $('#last_name').val();
     var addressline = $('#address_line').val();
@@ -144,7 +106,7 @@ function disableForm() {
     }
     // Hide the Save button, show the Edit button, and hide the Clear button
     saveButton.style.display = 'none';
-    editButton.style.display = 'block';
+    editButton.style.display = 'inline-block';
     clearButton.style.display = 'none';
 }
 
