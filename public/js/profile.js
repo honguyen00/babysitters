@@ -8,6 +8,10 @@ saveButton = document.querySelector('#save-profile');
 editButton = document.querySelector('#edit-profile');
 clearButton = document.querySelector('#clear-profile');
 
+document.addEventListener('DOMContentLoaded', function() {
+    saveButton.style.display = 'none';
+    clearButton.style.display = 'none';
+});
 
 // Check if variables are truthy before attaching event listeners
 if (form && saveButton && editButton && clearButton) {
@@ -29,21 +33,6 @@ if (form && saveButton && editButton && clearButton) {
 } else {
     console.error('One or more elements not found.');
 };
-
-
-// Update the displayed profile data with new data
-// function updateProfileData(data) {
-//     const fieldNames = ['first_name', 'last_name', 'address_line', 'suburb', 'phone_number', 'email'];
-//     fieldNames.forEach(fieldName => {
-//         const inputElement = form.querySelector(`#${fieldName}`);
-//         if (inputElement) {
-//             inputElement.value = data[fieldName];
-//         } else {
-//             console.error(`Element with ID "${fieldName}" not found in the form.`);
-//         }
-//     });
-// }
-
 
 function enableForm() {
     try {
